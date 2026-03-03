@@ -1,0 +1,43 @@
+// API Keys Configuration
+// 
+// IMPORTANT: Never commit this file with real API keys!
+// Add this file to .gitignore before adding real keys.
+//
+// To use:
+// 1. Copy this file to api_keys.dart (without the .template extension)
+// 2. Add your actual API keys
+// 3. Make sure api_keys.dart is in .gitignore
+
+class ApiKeys {
+  // OpenAI API Key
+  // Get yours at: https://platform.openai.com/api-keys
+  static const String openAIApiKey = String.fromEnvironment(
+    'OPENAI_API_KEY',
+    defaultValue: '',
+  );
+
+  // Alternative AI Providers (optional)
+  // static const String anthropicApiKey = '';
+  // static const String googleGeminiApiKey = '';
+  // static const String mistralApiKey = '';
+
+  // Health/Fitness APIs (optional, for integrations)
+  // static const String fitbitClientId = '';
+  // static const String fitbitClientSecret = '';
+  // static const String appleHealthKitBundleId = '';
+
+  // Finance APIs (optional, for bank integrations)
+  // static const String plaidClientId = '';
+  // static const String plaidSecret = '';
+
+  // Check if AI is configured
+  static bool get hasAIConfigured => openAIApiKey.isNotEmpty;
+
+  // Validation
+  static void validate() {
+    if (!hasAIConfigured) {
+      print('⚠️ WARNING: No AI API key configured. AI features will use mock responses.');
+      print('   Set OPENAI_API_KEY environment variable or add to api_keys.dart');
+    }
+  }
+}

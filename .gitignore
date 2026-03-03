@@ -1,0 +1,17 @@
+# Open Life
+
+```
+*.iml
+*.idea
+*.class
+*.g.dart
+*.flutter-plugins-dependencies
+.packages
+*.pub-cache/
+*.pub/
+/test/
+build/
+*.lock
+*.flutter-plugins
+*.g.dart
+*.DS_Store
