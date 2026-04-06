@@ -2,7 +2,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../features/fitness/providers/fitness_provider.dart';
 import '../../features/finance/providers/finance_provider.dart';
 import '../../features/assurance/providers/assurance_provider.dart';
-import 'ai_service.dart';
 
 /// Aggregates data from all three pillars for holistic AI analysis
 class DataAggregator {
@@ -16,37 +15,35 @@ class DataAggregator {
     return {
       'steps_today': fitness.steps,
       'steps_goal': fitness.stepsGoal,
-      'steps_percentage': (fitness.steps / fitness.stepsGoal * 100).toStringAsFixed(0),
+      'steps_percentage': (fitness.stepsPercentage * 100).toStringAsFixed(0),
       'calories_burned': fitness.caloriesBurned,
       'active_minutes': fitness.activeMinutes,
-      'heart_rate_avg': fitness.heartRate,
-      'weekly_steps': fitness.weeklySteps,
-      'weekly_avg_steps': (fitness.weeklySteps.reduce((a, b) => a + b) / fitness.weeklySteps.length).toInt(),
+      'workout_count': fitness.workoutCount,
+      'consumed_calories': fitness.consumedCalories,
+      'calories_remaining': fitness.caloriesRemaining,
+      'mood_rating': fitness.moodRating,
+      'energy_level': fitness.energyLevel,
+      'stress_level': fitness.stressLevel,
     };
   }
 
   /// Get finance data formatted for AI context
   Map<String, dynamic> getFinanceContext() {
     final finance = ref.read(financeProvider);
+    final topCategories = finance.topSpendingCategories;
     return {
       'total_balance': finance.totalBalance,
       'monthly_income': finance.monthlyIncome,
       'monthly_expenses': finance.monthlyExpenses,
-      'savings_rate': ((finance.monthlyIncome - finance.monthlyExpenses) / finance.monthlyIncome * 100).toStringAsFixed(0),
-      'top_spending_category': finance.spendingCategories.first.name,
-      'top_spending_amount': finance.spendingCategories.first.amount,
-      'budgets': finance.budgets.map((b) => {
-        'name': b.name,
-        'spent': b.spent,
-        'limit': b.limit,
-        'percentage': (b.spent / b.limit * 100).toStringAsFixed(0),
-      }).toList(),
-      'savings_goals': finance.savingsGoals.map((g) => {
-        'name': g.name,
-        'current': g.current,
-        'target': g.target,
-        'progress': (g.current / g.target * 100).toStringAsFixed(0),
-      }).toList(),
+      'net_cashflow': finance.netCashflow,
+      'savings_rate': (finance.savingsRate * 100).toStringAsFixed(0),
+      'transaction_count': finance.transactions.length,
+      'top_spending_category': topCategories.isNotEmpty ? topCategories.first.key : null,
+      'top_spending_amount': topCategories.isNotEmpty ? topCategories.first.value : null,
+      'budget_count': finance.budgets.length,
+      'savings_goals_count': finance.savingsGoals.length,
+      'total_subscriptions': finance.totalSubscriptions,
+      'is_over_budget': finance.isOverBudget,
     };
   }
 
@@ -54,23 +51,19 @@ class DataAggregator {
   Map<String, dynamic> getAssuranceContext() {
     final assurance = ref.read(assuranceProvider);
     return {
-      'blood_pressure': '${assurance.bloodPressureSystolic}/${assurance.bloodPressureDiastolic}',
-      'blood_pressure_status': _getBPStatus(assurance.bloodPressureSystolic, assurance.bloodPressureDiastolic),
+      'blood_pressure': assurance.bloodPressure ?? 'Not recorded',
+      'blood_pressure_status': assurance.hasHighBloodPressure ? 'elevated' : 'normal',
       'weight_lbs': assurance.weight,
+      'bmi': assurance.bmi?.toStringAsFixed(1) ?? 'Not calculated',
+      'resting_heart_rate': assurance.restingHeartRate,
       'upcoming_appointments': assurance.upcomingAppointments.length,
-      'next_appointment': assurance.upcomingAppointments.isNotEmpty
-          ? '${assurance.upcomingAppointments.first.doctorName} in ${assurance.upcomingAppointments.first.daysUntil} days'
-          : 'None scheduled',
-      'active_medications': assurance.medications.length,
-      'insurance_policies': assurance.insurancePolicies.length,
+      'next_appointment': assurance.nextAppointment != null 
+        ? '${assurance.nextAppointment!.doctorName} in ${assurance.nextAppointment!.daysUntil} days'
+        : 'None scheduled',
+      'active_medications': assurance.activeMedications,
+      'medications_needing_refill': assurance.medicationsNeedingRefill.length,
+      'insurance_policies': assurance.policies.length,
     };
-  }
-
-  String _getBPStatus(int systolic, int diastolic) {
-    if (systolic < 120 && diastolic < 80) return 'normal';
-    if (systolic < 130 && diastolic < 80) return 'elevated';
-    if (systolic < 140 || diastolic < 90) return 'high stage 1';
-    return 'high stage 2';
   }
 
   /// Get holistic context for AI (all pillars combined)
@@ -85,18 +78,20 @@ class DataAggregator {
 
   /// Generate cross-pillar insights
   Future<List<CrossPillarInsight>> generateCrossPillarInsights() async {
-    final fitness = getFitnessContext();
-    final finance = getFinanceContext();
-    final health = getAssuranceContext();
+    final fitness = ref.read(fitnessProvider);
+    final finance = ref.read(financeProvider);
+    final assurance = ref.read(assuranceProvider);
 
     final insights = <CrossPillarInsight>[];
 
     // Stress correlation: spending vs health
-    final savingsRate = double.parse(finance['savings_rate']);
-    if (savingsRate < 20) {
-      insights.add(CrossPillarInsight(
+    final savingsRate = finance.savingsRate;
+    final stressLevel = fitness.stressLevel;
+    
+    if (savingsRate < 0.20 && stressLevel != null && stressLevel > 6) {
+      insights.add(const CrossPillarInsight(
         title: 'Financial Stress Impact',
-        description: 'Your savings rate is below 20%. Studies show financial stress can impact health. Consider reviewing your budget.',
+        description: 'Your savings rate is below 20% and stress levels are elevated. Financial stress can impact health. Consider reviewing your budget.',
         pillars: [InsightPillar.finance, InsightPillar.health],
         severity: InsightSeverity.warning,
         actionable: true,
@@ -105,12 +100,15 @@ class DataAggregator {
     }
 
     // Activity vs Spending correlation
-    final weeklyAvgSteps = fitness['weekly_avg_steps'] as int;
-    if (weeklyAvgSteps < 7000) {
-      final topSpending = finance['top_spending_category'];
+    final steps = fitness.steps;
+    final stepsGoal = fitness.stepsGoal;
+    if (steps < stepsGoal * 0.7) {
+      final topCategory = finance.topSpendingCategories.isNotEmpty 
+        ? finance.topSpendingCategories.first.key 
+        : 'entertainment';
       insights.add(CrossPillarInsight(
         title: 'Boost Activity, Boost Savings',
-        description: 'You\'re averaging $weeklyAvgSteps steps/day. Adding a daily walk could improve health AND reduce spending on ${topSpending}.',
+        description: 'You\'re below 70% of your step goal. Adding a daily walk could improve health AND reduce spending on $topCategory.',
         pillars: [InsightPillar.fitness, InsightPillar.finance],
         severity: InsightSeverity.suggestion,
         actionable: true,
@@ -119,9 +117,9 @@ class DataAggregator {
     }
 
     // Health appointments vs finance
-    final upcomingAppts = health['upcoming_appointments'] as int;
-    if (upcomingAppts == 0) {
-      insights.add(CrossPillarInsight(
+    final upcomingAppts = assurance.upcomingAppointments.length;
+    if (upcomingAppts == 0 && assurance.policies.isNotEmpty) {
+      insights.add(const CrossPillarInsight(
         title: 'Preventive Care Saves Money',
         description: 'No upcoming health appointments. Regular checkups catch issues early and reduce long-term healthcare costs.',
         pillars: [InsightPillar.health, InsightPillar.finance],
@@ -132,10 +130,10 @@ class DataAggregator {
     }
 
     // Positive reinforcement
-    if (savingsRate > 30 && weeklyAvgSteps > 8000) {
+    if (savingsRate > 0.30 && steps > stepsGoal * 0.8) {
       insights.add(CrossPillarInsight(
         title: 'Excellent Balance! 🌟',
-        description: 'You\'re crushing it! ${savingsRate.toStringAsFixed(0)}% savings rate and ${weeklyAvgSteps} avg steps/day. You\'re optimizing both wealth and health.',
+        description: 'You\'re crushing it! ${(savingsRate * 100).toInt()}% savings rate and ${steps} steps today. You\'re optimizing both wealth and health.',
         pillars: [InsightPillar.fitness, InsightPillar.finance, InsightPillar.health],
         severity: InsightSeverity.positive,
         actionable: false,

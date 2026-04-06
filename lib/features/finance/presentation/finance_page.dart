@@ -9,6 +9,7 @@ import '../../../core/theme/app_text_styles.dart';
 import '../../../shared/widgets/neon_card.dart';
 import '../../../shared/widgets/gradient_button.dart';
 import '../providers/finance_provider.dart';
+import '../../../shared/models/finance_data.dart';
 
 class FinancePage extends ConsumerStatefulWidget {
   const FinancePage({super.key});
@@ -87,11 +88,11 @@ class _FinancePageState extends ConsumerState<FinancePage> with SingleTickerProv
               indicatorColor: AppColors.financePrimary,
               labelColor: AppColors.financePrimary,
               unselectedLabelColor: AppColors.textMuted,
-              tabs: const [
-                Tab(icon: Icon(PhosphorIcons.chartPie)),
-                Tab(icon: Icon(PhosphorIcons.wallet)),
-                Tab(icon: Icon(PhosphorIcons.target)),
-                Tab(icon: Icon(PhosphorIcons.sparkle)),
+              tabs: [
+                Tab(icon: Icon(PhosphorIcons.chartPie())),
+                Tab(icon: Icon(PhosphorIcons.wallet())),
+                Tab(icon: Icon(PhosphorIcons.target())),
+                Tab(icon: Icon(PhosphorIcons.sparkle())),
               ],
             ),
           ),
@@ -170,20 +171,35 @@ class _FinancePageState extends ConsumerState<FinancePage> with SingleTickerProv
             glowColor: AppColors.financePrimary,
             child: SizedBox(
               height: 200,
-              child: PieChart(
-                PieChartData(
-                  sectionsSpace: 2,
-                  centerSpaceRadius: 40,
-                  sections: state.spendingCategories.map((cat) {
-                    return PieChartSectionData(
-                      value: cat.amount,
-                      title: '${cat.percentage.toInt()}%',
-                      color: cat.color,
-                      radius: 60,
-                      titleStyle: AppTextStyles.caption.copyWith(color: Colors.white),
-                    );
-                  }).toList(),
-                ),
+              child: Builder(
+                builder: (context) {
+                  final categories = state.topSpendingCategories;
+                  final total = categories.fold(0.0, (sum, e) => sum + e.value);
+                  final colors = [
+                    AppColors.sunsetOrange,
+                    AppColors.cyan,
+                    AppColors.neonPink,
+                    AppColors.financePrimary,
+                    AppColors.electricPurple,
+                  ];
+                  return PieChart(
+                    PieChartData(
+                      sectionsSpace: 2,
+                      centerSpaceRadius: 40,
+                      sections: categories.asMap().entries.map((entry) {
+                        final cat = entry.value;
+                        final percentage = total > 0 ? (cat.value / total * 100) : 0;
+                        return PieChartSectionData(
+                          value: cat.value,
+                          title: '${percentage.toInt()}%',
+                          color: colors[entry.key % colors.length],
+                          radius: 60,
+                          titleStyle: AppTextStyles.caption.copyWith(color: Colors.white),
+                        );
+                      }).toList(),
+                    ),
+                  );
+                },
               ),
             ),
           ).animate().fadeIn(delay: 200.ms).slideY(begin: 0.1),
@@ -206,7 +222,7 @@ class _FinancePageState extends ConsumerState<FinancePage> with SingleTickerProv
 
           // AI Insight
           const SizedBox(height: 24),
-          _buildAIInsight(state.aiInsight).animate().fadeIn(delay: 400.ms),
+          _buildAIInsight(state.aiInsight ?? '').animate().fadeIn(delay: 400.ms),
         ],
       ),
     );
@@ -226,7 +242,7 @@ class _FinancePageState extends ConsumerState<FinancePage> with SingleTickerProv
           const SizedBox(height: 24),
           GradientButton(
             text: 'Add Budget',
-            icon: PhosphorIcons.plus,
+            icon: PhosphorIcons.plus(),
             gradient: AppColors.financeGradient,
           ),
         ],
@@ -248,7 +264,7 @@ class _FinancePageState extends ConsumerState<FinancePage> with SingleTickerProv
           const SizedBox(height: 24),
           GradientButton(
             text: 'Create Goal',
-            icon: PhosphorIcons.plus,
+            icon: PhosphorIcons.plus(),
             gradient: AppColors.financeGradient,
           ),
         ],
@@ -277,7 +293,7 @@ class _FinancePageState extends ConsumerState<FinancePage> with SingleTickerProv
                     gradient: AppColors.financeGradient,
                     shape: BoxShape.circle,
                   ),
-                  child: const Icon(PhosphorIcons.brain, size: 32, color: Colors.white),
+                  child: Icon(PhosphorIcons.brain(), size: 32, color: Colors.white),
                 ),
                 const SizedBox(height: 16),
                 Text('AI Financial Advisor', style: AppTextStyles.h3),
@@ -290,7 +306,7 @@ class _FinancePageState extends ConsumerState<FinancePage> with SingleTickerProv
                 const SizedBox(height: 24),
                 GradientButton(
                   text: 'Start Chat',
-                  icon: PhosphorIcons.chatCircle,
+                  icon: PhosphorIcons.chatCircle(),
                   gradient: AppColors.financeGradient,
                 ),
               ],
@@ -420,7 +436,7 @@ class _FinancePageState extends ConsumerState<FinancePage> with SingleTickerProv
                   gradient: AppColors.financeGradient,
                   borderRadius: BorderRadius.circular(10),
                 ),
-                child: const Icon(PhosphorIcons.flag, color: Colors.white, size: 20),
+                child: Icon(PhosphorIcons.flag(), color: Colors.white, size: 20),
               ),
               const SizedBox(width: 12),
               Expanded(
@@ -498,7 +514,7 @@ class _FinancePageState extends ConsumerState<FinancePage> with SingleTickerProv
               color: AppColors.financePrimary.withOpacity(0.2),
               borderRadius: BorderRadius.circular(12),
             ),
-            child: const Icon(PhosphorIcons.sparkle, color: AppColors.financePrimary),
+            child: Icon(PhosphorIcons.sparkle(), color: AppColors.financePrimary),
           ),
           const SizedBox(width: 16),
           Expanded(
@@ -524,7 +540,7 @@ class _FinancePageState extends ConsumerState<FinancePage> with SingleTickerProv
         child: Row(
           children: [
             Expanded(child: Text(question, style: AppTextStyles.bodyMedium)),
-            const Icon(PhosphorIcons.caretRight, color: AppColors.textMuted, size: 20),
+            Icon(PhosphorIcons.caretRight(), color: AppColors.textMuted, size: 20),
           ],
         ),
       ),

@@ -1,7 +1,10 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../../../main.dart';
-import '../../data/fitness_repository.dart';
+import '../data/fitness_repository.dart';
 import '../../../shared/models/fitness_data.dart';
+
+// Export for use in other files
+export '../data/fitness_repository.dart';
+export '../../../shared/models/fitness_data.dart';
 
 class FitnessState {
   final FitnessData? todayData;
@@ -137,12 +140,17 @@ class FitnessNotifier extends StateNotifier<FitnessState> {
 
   Map<String, dynamic> getDataForAI() {
     return {
-      'today': todayData?.toJson(),
-      'weeklyStats': weeklyStats,
-      'last7Days': last7Days.map((d) => d.toJson()).toList(),
+      'today': state.todayData?.toJson(),
+      'weeklyStats': state.weeklyStats,
+      'last7Days': state.last7Days.map((d) => d.toJson()).toList(),
     };
   }
 }
+
+final fitnessRepositoryProvider = Provider<FitnessRepository>((ref) {
+  final repo = FitnessRepository();
+  return repo;
+});
 
 final fitnessProvider = StateNotifierProvider<FitnessNotifier, FitnessState>((ref) {
   final repository = ref.watch(fitnessRepositoryProvider);

@@ -1,7 +1,6 @@
 import 'package:hive/hive.dart';
 import 'package:uuid/uuid.dart';
 
-part 'finance_data.g.dart';
 
 @HiveType(typeId: 20)
 class FinanceData extends HiveObject {
@@ -82,7 +81,7 @@ class FinanceData extends HiveObject {
     return map;
   }
 
-  double get totalDebt => subscriptions.where((s) => s.isDebt).fold(0, (sum, s) => sum + s.balance);
+  double get totalDebt => subscriptions.where((s) => s.isDebt).fold(0.0, (sum, s) => sum + (s.balance ?? 0));
 
   FinanceData copyWith({
     String? id,

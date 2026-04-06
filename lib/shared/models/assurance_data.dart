@@ -1,7 +1,6 @@
 import 'package:hive/hive.dart';
 import 'package:uuid/uuid.dart';
 
-part 'assurance_data.g.dart';
 
 @HiveType(typeId: 30)
 class AssuranceData extends HiveObject {
@@ -105,7 +104,7 @@ class AssuranceData extends HiveObject {
     ? '$bloodPressureSystolic/$bloodPressureDiastolic'
     : null;
 
-  double? get bmiCalculated => (weight != null && height != null && height > 0)
+  double? get bmiCalculated => (weight != null && height != null && height! > 0)
     ? (weight! * 703) / (height! * height!)
     : null;
 
@@ -179,7 +178,7 @@ class AssuranceData extends HiveObject {
     'activeMedications': activeMedications,
     'hasHighBloodPressure': hasHighBloodPressure,
     'stressLevel': stressLevel,
-    'sleepQuality': sleepLevel,
+    'sleepQuality': sleepQuality,
   };
 }
 

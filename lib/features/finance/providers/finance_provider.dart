@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
-import '../../../main.dart';
-import '../../data/finance_repository.dart';
+import '../data/finance_repository.dart';
 import '../../../shared/models/finance_data.dart';
 import '../../../core/theme/app_colors.dart';
 
@@ -169,14 +168,14 @@ class FinanceNotifier extends StateNotifier<FinanceState> {
 extension TransactionUI on Transaction {
   IconData get icon {
     return switch (category.toLowerCase()) {
-      'food' || 'dining' || 'groceries' => PhosphorIcons.forkKnife,
-      'transport' || 'gas' || 'car' => PhosphorIcons.car,
-      'entertainment' || 'movies' || 'games' => PhosphorIcons.gameController,
-      'shopping' || 'clothes' => PhosphorIcons.shoppingBag,
-      'housing' || 'rent' || 'mortgage' => PhosphorIcons.house,
-      'health' || 'medical' => PhosphorIcons.heart,
-      'income' || 'salary' => PhosphorIcons.money,
-      _ => isExpense ? PhosphorIcons.minus : PhosphorIcons.plus,
+      'food' || 'dining' || 'groceries' => PhosphorIcons.forkKnife(),
+      'transport' || 'gas' || 'car' => PhosphorIcons.car(),
+      'entertainment' || 'movies' || 'games' => PhosphorIcons.gameController(),
+      'shopping' || 'clothes' => PhosphorIcons.shoppingBag(),
+      'housing' || 'rent' || 'mortgage' => PhosphorIcons.house(),
+      'health' || 'medical' => PhosphorIcons.heart(),
+      'income' || 'salary' => PhosphorIcons.money(),
+      _ => isExpense ? PhosphorIcons.minus() : PhosphorIcons.plus(),
     };
   }
 
@@ -192,6 +191,40 @@ extension TransactionUI on Transaction {
     };
   }
 }
+
+extension BudgetUI on Budget {
+  IconData get icon {
+    return switch (category.toLowerCase()) {
+      'food' || 'dining' || 'groceries' => PhosphorIcons.forkKnife(),
+      'transport' || 'gas' => PhosphorIcons.car(),
+      'entertainment' => PhosphorIcons.gameController(),
+      'shopping' => PhosphorIcons.shoppingBag(),
+      'housing' || 'rent' => PhosphorIcons.house(),
+      'health' || 'medical' => PhosphorIcons.heart(),
+      'utilities' => PhosphorIcons.lightning(),
+      _ => PhosphorIcons.wallet(),
+    };
+  }
+
+  Color get color {
+    return switch (category.toLowerCase()) {
+      'food' || 'dining' => AppColors.sunsetOrange,
+      'transport' => AppColors.cyan,
+      'entertainment' => AppColors.neonPink,
+      'shopping' => AppColors.financePrimary,
+      'housing' => AppColors.electricPurple,
+      'health' => AppColors.assurancePrimary,
+      'utilities' => AppColors.sunsetYellow,
+      _ => AppColors.chrome,
+    };
+  }
+}
+
+final financeRepositoryProvider = Provider<FinanceRepository>((ref) {
+  final repo = FinanceRepository();
+  // Note: init() must be called before use (done in main)
+  return repo;
+});
 
 final financeProvider = StateNotifierProvider<FinanceNotifier, FinanceState>((ref) {
   final repository = ref.watch(financeRepositoryProvider);

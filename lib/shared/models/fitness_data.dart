@@ -1,7 +1,6 @@
 import 'package:hive/hive.dart';
 import 'package:uuid/uuid.dart';
 
-part 'fitness_data.g.dart';
 
 @HiveType(typeId: 10)
 class FitnessData extends HiveObject {

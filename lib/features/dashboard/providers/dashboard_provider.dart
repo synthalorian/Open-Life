@@ -1,11 +1,17 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../../../main.dart';
+import 'package:phosphor_flutter/phosphor_flutter.dart';
+import '../../fitness/providers/fitness_provider.dart';
 import '../../fitness/data/fitness_repository.dart';
+import '../../finance/providers/finance_provider.dart';
 import '../../finance/data/finance_repository.dart';
+import '../../assurance/providers/assurance_provider.dart';
 import '../../assurance/data/assurance_repository.dart';
+import '../../../shared/models/fitness_data.dart';
+import '../../../shared/models/finance_data.dart';
+import '../../../shared/models/assurance_data.dart';
 import '../../../core/services/data_aggregator.dart';
 import '../../../core/theme/app_colors.dart';
-import 'package:phosphor_flutter/phosphor_flutter.dart';
 
 class AIRecommendation {
   final String title;
@@ -158,8 +164,8 @@ class DashboardNotifier extends StateNotifier<DashboardState> {
       score += 0.5; // Taking prescribed medications
       factors++;
     }
-    
-    if (data.upcomingAppointments.isNotEmpty) {
+
+    if (data.upcomingAppointments > 0) {
       score += 0.5; // Has upcoming care
       factors++;
     }
@@ -180,7 +186,7 @@ class DashboardNotifier extends StateNotifier<DashboardState> {
         title: 'Get Moving',
         description: 'You\'re at ${(fitness.stepsPercentage * 100).toInt()}% of your step goal. A 10-minute walk will help!',
         category: 'Fitness',
-        icon: PhosphorIcons.footprints,
+        icon: PhosphorIcons.footprints(),
         color: AppColors.fitnessPrimary,
       ));
     }
@@ -191,7 +197,7 @@ class DashboardNotifier extends StateNotifier<DashboardState> {
         title: 'Budget Alert',
         description: 'You\'re over budget this month. Review your spending in ${finance.spendingByCategory.entries.firstOrNull?.key ?? 'top categories'}.',
         category: 'Finance',
-        icon: PhosphorIcons.warning,
+        icon: PhosphorIcons.warning(),
         color: AppColors.warning,
       ));
     }
@@ -203,7 +209,7 @@ class DashboardNotifier extends StateNotifier<DashboardState> {
         title: 'Cut Unused Subscriptions',
         description: 'Save \$${savings.toStringAsFixed(2)}/month by canceling ${unusedSubs.length} unused subscriptions.',
         category: 'Finance',
-        icon: PhosphorIcons.scissors,
+        icon: PhosphorIcons.scissors(),
         color: AppColors.financePrimary,
       ));
     }
@@ -214,17 +220,17 @@ class DashboardNotifier extends StateNotifier<DashboardState> {
         title: 'Refill Medications',
         description: '${assurance.medicationsNeedingRefill.length} medication(s) need refill. Don\'t wait until you run out!',
         category: 'Health',
-        icon: PhosphorIcons.pill,
+        icon: PhosphorIcons.pill(),
         color: AppColors.assurancePrimary,
       ));
     }
 
-    if (assurance.upcomingAppointments.isEmpty) {
+    if (assurance.upcomingAppointments == 0) {
       recommendations.add(AIRecommendation(
         title: 'Schedule Checkup',
         description: 'No upcoming appointments. Preventive care is key to long-term health.',
         category: 'Health',
-        icon: PhosphorIcons.calendarPlus,
+        icon: PhosphorIcons.calendarPlus(),
         color: AppColors.info,
       ));
     }

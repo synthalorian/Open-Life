@@ -1,15 +1,7 @@
 import 'package:flutter/material.dart';
-import '../theme/app_colors.dart';
+import '../../core/theme/app_colors.dart';
 
 /// Extension methods for common operations
-extension ColorExtensions on Color {
-  Color withOpacity(double opacity) => Color.fromRGBO(
-    red,
-    green,
-    blue,
-    opacity,
-  );
-}
 
 extension StringExtensions on String {
   String capitalize() {
@@ -19,7 +11,7 @@ extension StringExtensions on String {
 }
 
 extension NumExtensions on num {
-  bool get isBetween(num from, num to) {
+  bool isBetween(num from, num to) {
     return from <= this && this <= to;
   }
 }

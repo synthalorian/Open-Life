@@ -2,6 +2,10 @@
 // In production, run: flutter pub run build_runner build
 
 import 'package:hive/hive.dart';
+import '../../shared/models/user_profile.dart';
+import '../../shared/models/fitness_data.dart';
+import '../../shared/models/finance_data.dart';
+import '../../shared/models/assurance_data.dart';
 
 // ==================== USER PROFILE ====================
 
