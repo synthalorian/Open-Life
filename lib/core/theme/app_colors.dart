@@ -23,6 +23,7 @@ class AppColors {
   static const Color sunsetYellow = Color(0xFFFFD700);
   static const Color sunsetPink = Color(0xFFFF1493);
   static const Color deepPurple = Color(0xFF4A0080);
+  static const Color neonGreen = Color(0xFF00FF88);
 
   // === BACKGROUND COLORS ===
   static const Color backgroundDark = Color(0xFF0A0A1A);

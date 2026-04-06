@@ -60,17 +60,17 @@ class FinanceRepository {
     await saveMonthlyData(updated);
   }
 
-  Future<void> updateTransaction(DateTime month, String transactionId, Transaction updated) async {
+  Future<void> updateTransaction(DateTime month, String transactionId, Transaction updatedTransaction) async {
     final data = getOrCreateMonthlyData(month);
-    final updatedTransactions = data.transactions.map((t) => 
-      t.id == transactionId ? updated : t
+    final updatedTransactions = data.transactions.map((t) =>
+      t.id == transactionId ? updatedTransaction : t
     ).toList();
-    
+
     // Recalculate totals
     final newExpenses = updatedTransactions
       .where((t) => t.isExpense)
       .fold(0.0, (sum, t) => sum + t.amount);
-    
+
     final newIncome = updatedTransactions
       .where((t) => !t.isExpense)
       .fold(0.0, (sum, t) => sum + t.amount);
@@ -80,7 +80,7 @@ class FinanceRepository {
       monthlyExpenses: newExpenses,
       monthlyIncome: newIncome,
     );
-    
+
     await saveMonthlyData(updated);
   }
 

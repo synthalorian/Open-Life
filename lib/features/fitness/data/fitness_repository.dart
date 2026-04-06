@@ -1,5 +1,5 @@
 import 'package:hive/hive.dart';
-import '../models/fitness_data.dart';
+import '../../../shared/models/fitness_data.dart';
 
 class FitnessRepository {
   static const String _boxName = 'fitness_data';

@@ -105,26 +105,29 @@ class AIChatNotifier extends StateNotifier<AIChatState> {
     
     // Holistic health analysis
     if (lowerQuery.contains('overall health') || lowerQuery.contains('health summary')) {
+      final bp = assurance.bloodPressure ?? 'Not recorded';
+      final nextAppt = assurance.nextAppointment;
       return _AIResponse(
         text: '''Here's your health overview:
 
-**Fitness:** You've taken ${fitness.steps.toLocaleString()} steps today (${(fitness.steps / fitness.stepsGoal * 100).toInt()}% of goal). Active for ${fitness.activeMinutes} minutes.
+**Fitness:** You've taken ${fitness.steps.toString()} steps today (${(fitness.stepsPercentage * 100).toInt()}% of goal). Active for ${fitness.activeMinutes} minutes.
 
-**Vitals:** Blood pressure is ${assurance.bloodPressureSystolic}/${assurance.bloodPressureDiastolic} mmHg (healthy range). Weight: ${assurance.weight} lbs.
+**Vitals:** Blood pressure is $bp mmHg. Weight: ${assurance.weight?.toStringAsFixed(1) ?? 'Not recorded'} lbs.
 
-**Upcoming:** You have an appointment with ${assurance.upcomingAppointments.first.doctorName} in ${assurance.upcomingAppointments.first.daysUntil} days.
+**Upcoming:** ${nextAppt != null ? 'You have an appointment with ${nextAppt.doctorName} in ${nextAppt.daysUntil} days.' : 'No upcoming appointments.'}
 
-**Recommendation:** ${fitness.aiInsight}''',
+**Recommendation:** ${fitness.aiInsight ?? 'Keep tracking your health!'}''',
         context: [
-          const MessageContext(label: 'Fitness', icon: PhosphorIcons.barbell, color: AppColors.fitnessPrimary),
-          const MessageContext(label: 'Health', icon: PhosphorIcons.heart, color: AppColors.assurancePrimary),
+          MessageContext(label: 'Fitness', icon: PhosphorIcons.barbell(), color: AppColors.fitnessPrimary),
+          MessageContext(label: 'Health', icon: PhosphorIcons.heart(), color: AppColors.assurancePrimary),
         ],
       );
     }
 
     // Spending analysis
     if (lowerQuery.contains('spending') || lowerQuery.contains('budget') || lowerQuery.contains('money')) {
-      final topCategory = finance.spendingCategories.first;
+      final topCategories = finance.topSpendingCategories;
+      final topCategory = topCategories.isNotEmpty ? topCategories.first : null;
       return _AIResponse(
         text: '''Here's your financial snapshot:
 
@@ -133,25 +136,26 @@ class AIChatNotifier extends StateNotifier<AIChatState> {
 **This Month:**
 - Income: \$${finance.monthlyIncome.toStringAsFixed(2)}
 - Expenses: \$${finance.monthlyExpenses.toStringAsFixed(2)}
-- Saved: \$${(finance.monthlyIncome - finance.monthlyExpenses).toStringAsFixed(2)}
+- Saved: \$${finance.netCashflow.toStringAsFixed(2)}
 
-**Top Spending:** ${topCategory.name} at \$${topCategory.amount.toStringAsFixed(2)} (${topCategory.percentage.toInt()}% of expenses)
+${topCategory != null ? '**Top Spending:** ${topCategory.key} at \$${topCategory.value.toStringAsFixed(2)}' : ''}
 
-**Insight:** ${finance.aiInsight}''',
+**Insight:** ${finance.aiInsight ?? 'Track more transactions to get personalized insights!'}''',
         context: [
-          const MessageContext(label: 'Finance', icon: PhosphorIcons.wallet, color: AppColors.financePrimary),
+          MessageContext(label: 'Finance', icon: PhosphorIcons.wallet(), color: AppColors.financePrimary),
         ],
       );
     }
 
     // Workout plan
     if (lowerQuery.contains('workout') || lowerQuery.contains('exercise') || lowerQuery.contains('fitness')) {
+      final stepsNeeded = fitness.stepsGoal - fitness.steps;
       return _AIResponse(
         text: '''Based on your current activity level and goals, here's a personalized workout plan:
 
 **Today's Focus: Active Recovery**
 - 10 min light stretching
-- 15 min walk (you need ${fitness.stepsGoal - fitness.steps} more steps)
+- 15 min walk (${stepsNeeded > 0 ? 'you need $stepsNeeded more steps' : 'you\'ve hit your goal!'})
 - 5 min foam rolling
 
 **This Week:**
@@ -160,38 +164,41 @@ class AIChatNotifier extends StateNotifier<AIChatState> {
 - Friday: Lower body strength (30 min)
 - Weekend: Long walk or hike (45+ min)
 
-**Tip:** ${fitness.aiInsight}''',
+**Tip:** ${fitness.aiInsight ?? 'Consistency is key!'}''',
         context: [
-          const MessageContext(label: 'Fitness', icon: PhosphorIcons.barbell, color: AppColors.fitnessPrimary),
+          MessageContext(label: 'Fitness', icon: PhosphorIcons.barbell(), color: AppColors.fitnessPrimary),
         ],
       );
     }
 
     // Weekly summary
     if (lowerQuery.contains('weekly') || lowerQuery.contains('summary') || lowerQuery.contains('overview')) {
+      final avgSteps = fitness.last7Days.isNotEmpty 
+        ? fitness.last7Days.fold(0, (sum, d) => sum + d.steps) ~/ fitness.last7Days.length
+        : 0;
       return _AIResponse(
         text: '''Here's your weekly life summary:
 
 **💪 Fitness**
-- Average steps: ${(fitness.weeklySteps.reduce((a, b) => a + b) / fitness.weeklySteps.length).toInt()}/day
+- Average steps: $avgSteps/day
 - Active minutes: ${fitness.activeMinutes * 7} total
-- Trend: 23% more active than last week!
+- Workouts: ${fitness.workoutCount}
 
 **💰 Finance**
 - Spent: \$${finance.monthlyExpenses.toStringAsFixed(2)}
-- Saved: \$${(finance.monthlyIncome - finance.monthlyExpenses).toStringAsFixed(2)}
-- Savings rate: ${((finance.monthlyIncome - finance.monthlyExpenses) / finance.monthlyIncome * 100).toInt()}%
+- Saved: \$${finance.netCashflow.toStringAsFixed(2)}
+- Savings rate: ${(finance.savingsRate * 100).toInt()}%
 
 **🏥 Health**
-- BP: ${assurance.bloodPressureSystolic}/${assurance.bloodPressureDiastolic} (normal)
+- BP: ${assurance.bloodPressure ?? 'Not recorded'}
 - Appointments: ${assurance.upcomingAppointments.length} upcoming
-- Medications: ${assurance.medications.length} active
+- Medications: ${assurance.activeMedications} active
 
-**AI Recommendation:** You're doing great! Focus on maintaining your step count and consider increasing your savings rate by 5%.''',
+**AI Recommendation:** You're doing great! Keep tracking your data for more personalized insights.''',
         context: [
-          const MessageContext(label: 'Fitness', icon: PhosphorIcons.barbell, color: AppColors.fitnessPrimary),
-          const MessageContext(label: 'Finance', icon: PhosphorIcons.wallet, color: AppColors.financePrimary),
-          const MessageContext(label: 'Health', icon: PhosphorIcons.heart, color: AppColors.assurancePrimary),
+          MessageContext(label: 'Fitness', icon: PhosphorIcons.barbell(), color: AppColors.fitnessPrimary),
+          MessageContext(label: 'Finance', icon: PhosphorIcons.wallet(), color: AppColors.financePrimary),
+          MessageContext(label: 'Health', icon: PhosphorIcons.heart(), color: AppColors.assurancePrimary),
         ],
       );
     }
@@ -225,7 +232,3 @@ class _AIResponse {
 final aiChatProvider = StateNotifierProvider<AIChatNotifier, AIChatState>((ref) {
   return AIChatNotifier(ref);
 });
-
-extension on int {
-  String toLocaleString() => toString();
-}

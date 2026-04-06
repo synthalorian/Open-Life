@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 import '../../core/theme/app_colors.dart';
-import '../../core/theme/app_text_styles.dart';
+
 
 class SynthwaveShell extends ConsumerStatefulWidget {
   final Widget child;
@@ -19,34 +19,40 @@ class _SynthwaveShellState extends ConsumerState<SynthwaveShell> {
 
   final List<_NavItem> _navItems = [
     _NavItem(
-      icon: PhosphorIcons.house,
-      activeIcon: PhosphorIcons.houseFill,
+      icon: PhosphorIcons.house(),
+      activeIcon: PhosphorIconsFill.house,
       label: 'Home',
       path: '/dashboard',
     ),
     _NavItem(
-      icon: PhosphorIcons.barbell,
-      activeIcon: PhosphorIcons.barbellFill,
+      icon: PhosphorIcons.barbell(),
+      activeIcon: PhosphorIconsFill.barbell,
       label: 'Fitness',
       path: '/fitness',
     ),
     _NavItem(
-      icon: PhosphorIcons.wallet,
-      activeIcon: PhosphorIcons.walletFill,
+      icon: PhosphorIcons.wallet(),
+      activeIcon: PhosphorIconsFill.wallet,
       label: 'Finance',
       path: '/finance',
     ),
     _NavItem(
-      icon: PhosphorIcons.heart,
-      activeIcon: PhosphorIcons.heartFill,
+      icon: PhosphorIcons.heart(),
+      activeIcon: PhosphorIconsFill.heart,
       label: 'Health',
       path: '/assurance',
     ),
     _NavItem(
-      icon: PhosphorIcons.sparkle,
-      activeIcon: PhosphorIcons.sparkleFill,
+      icon: PhosphorIcons.sparkle(),
+      activeIcon: PhosphorIconsFill.sparkle,
       label: 'AI',
       path: '/ai',
+    ),
+    _NavItem(
+      icon: PhosphorIcons.gearSix(),
+      activeIcon: PhosphorIconsFill.gearSix,
+      label: 'Settings',
+      path: '/settings',
     ),
   ];
 

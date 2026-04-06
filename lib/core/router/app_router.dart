@@ -7,6 +7,7 @@ import '../../features/fitness/presentation/fitness_page.dart';
 import '../../features/finance/presentation/finance_page.dart';
 import '../../features/assurance/presentation/assurance_page.dart';
 import '../../features/ai_assistant/presentation/ai_chat_page.dart';
+import '../../features/settings/presentation/settings_page.dart';
 import '../../shared/widgets/synthwave_shell.dart';
 
 final routerProvider = Provider<GoRouter>((ref) {
@@ -50,6 +51,13 @@ final routerProvider = Provider<GoRouter>((ref) {
             name: 'ai_assistant',
             pageBuilder: (context, state) => const NoTransitionPage(
               child: AIChatPage(),
+            ),
+          ),
+          GoRoute(
+            path: '/settings',
+            name: 'settings',
+            pageBuilder: (context, state) => const NoTransitionPage(
+              child: SettingsPage(),
             ),
           ),
         ],
