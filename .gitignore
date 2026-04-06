@@ -1,17 +1,43 @@
-# Open Life
-
-```
-*.iml
-*.idea
-*.class
-*.g.dart
-*.flutter-plugins-dependencies
+# Flutter/Dart
+.dart_tool/
 .packages
-*.pub-cache/
-*.pub/
-/test/
+.pub-cache/
+.pub/
 build/
-*.lock
-*.flutter-plugins
 *.g.dart
-*.DS_Store
+
+# IDE
+*.iml
+.idea/
+*.code-workspace
+.vscode/
+
+# macOS
+.DS_Store
+
+# Android
+android/.gradle/
+android/app/build/
+android/local.properties
+*.jks
+*.keystore
+
+# iOS
+ios/Pods/
+ios/.symlinks/
+ios/Flutter/Flutter.framework
+ios/Flutter/Flutter.podspec
+
+# Generated
+.flutter-plugins
+.flutter-plugins-dependencies
+*.lock
+
+# Build artifacts
+releases/
+*.apk
+*.aab
+*.ipa
+
+# Metadata
+.metadata

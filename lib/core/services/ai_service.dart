@@ -49,18 +49,8 @@ class AIService {
       });
     }
 
-    final fullPrompt = '''
-$systemPrompt
-
-# User Context
-$contextBuffer
-
-# User Message
-$message
-''';
-
-    // TODO: Implement actual API call
-    // For now, return a placeholder
+    // TODO: When API is implemented, send this as the full prompt:
+    // systemPrompt + contextBuffer + message
     return _getMockResponse(message);
   }
 

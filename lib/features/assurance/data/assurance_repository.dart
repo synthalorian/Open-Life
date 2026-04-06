@@ -194,10 +194,13 @@ class AssuranceRepository {
   }
 
   EmergencyContact? getPrimaryEmergencyContact() {
-    return getEmergencyContacts().firstWhere(
-      (c) => c.isPrimary,
-      orElse: () => getEmergencyContacts().isNotEmpty ? getEmergencyContacts().first : null as EmergencyContact,
-    );
+    final contacts = getEmergencyContacts();
+    if (contacts.isEmpty) return null;
+    try {
+      return contacts.firstWhere((c) => c.isPrimary);
+    } catch (_) {
+      return contacts.first;
+    }
   }
 
   // Metric History

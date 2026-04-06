@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
-import '../../../main.dart';
-import '../../data/assurance_repository.dart';
+import '../data/assurance_repository.dart';
 import '../../../shared/models/assurance_data.dart';
 import '../../../core/theme/app_colors.dart';
 
@@ -206,11 +205,11 @@ class AssuranceNotifier extends StateNotifier<AssuranceState> {
 extension AppointmentUI on Appointment {
   IconData get icon {
     return switch (specialty.toLowerCase()) {
-      'dentist' || 'dental' => PhosphorIcons.tooth,
-      'eye' || 'vision' || 'optometry' => PhosphorIcons.eye,
-      'heart' || 'cardiology' => PhosphorIcons.heartbeat,
-      'mental' || 'therapy' || 'psychiatry' => PhosphorIcons.brain,
-      _ => PhosphorIcons.stethoscope,
+      'dentist' || 'dental' => PhosphorIcons.tooth(),
+      'eye' || 'vision' || 'optometry' => PhosphorIcons.eye(),
+      'heart' || 'cardiology' => PhosphorIcons.heartbeat(),
+      'mental' || 'therapy' || 'psychiatry' => PhosphorIcons.brain(),
+      _ => PhosphorIcons.stethoscope(),
     };
   }
 }
@@ -218,11 +217,11 @@ extension AppointmentUI on Appointment {
 extension InsurancePolicyUI on InsurancePolicy {
   IconData get icon {
     return switch (type.toLowerCase()) {
-      'health' => PhosphorIcons.heart,
-      'dental' => PhosphorIcons.tooth,
-      'vision' => PhosphorIcons.eye,
-      'life' => PhosphorIcons.shield,
-      _ => PhosphorIcons.shieldCheck,
+      'health' => PhosphorIcons.heart(),
+      'dental' => PhosphorIcons.tooth(),
+      'vision' => PhosphorIcons.eye(),
+      'life' => PhosphorIcons.shield(),
+      _ => PhosphorIcons.shieldCheck(),
     };
   }
 
@@ -236,6 +235,11 @@ extension InsurancePolicyUI on InsurancePolicy {
     };
   }
 }
+
+final assuranceRepositoryProvider = Provider<AssuranceRepository>((ref) {
+  final repo = AssuranceRepository();
+  return repo;
+});
 
 final assuranceProvider = StateNotifierProvider<AssuranceNotifier, AssuranceState>((ref) {
   final repository = ref.watch(assuranceRepositoryProvider);

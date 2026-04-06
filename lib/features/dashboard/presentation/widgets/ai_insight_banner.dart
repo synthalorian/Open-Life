@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
-import '../../../core/theme/app_colors.dart';
-import '../../../core/theme/app_text_styles.dart';
-import '../../../shared/widgets/neon_card.dart';
-import '../../../core/services/data_aggregator.dart';
+import '../../../../core/theme/app_colors.dart';
+import '../../../../core/theme/app_text_styles.dart';
+import '../../../../shared/widgets/neon_card.dart';
+import '../../../../core/services/data_aggregator.dart';
 
 /// AI-powered insight banner that shows cross-pillar insights
 class AIInsightBanner extends ConsumerWidget {
@@ -46,7 +46,7 @@ class AIInsightBanner extends ConsumerWidget {
               gradient: AppColors.neonGlowGradient,
               borderRadius: BorderRadius.circular(12),
             ),
-            child: const Icon(PhosphorIcons.sparkle, color: Colors.white),
+            child: Icon(PhosphorIcons.sparkle(), color: Colors.white),
           ),
           const SizedBox(width: 16),
           Expanded(
@@ -111,7 +111,7 @@ class AIInsightBanner extends ConsumerWidget {
               height: 24,
               child: CircularProgressIndicator(
                 strokeWidth: 2,
-                valueColor: AlwaysStoppedAnimation(AppColors.electricPurple),
+                valueColor: AlwaysStoppedAnimation<Color>(AppColors.electricPurple),
               ),
             ),
           ),
@@ -143,11 +143,11 @@ class AIInsightBanner extends ConsumerWidget {
   IconData _getPillarIcon(InsightPillar pillar) {
     switch (pillar) {
       case InsightPillar.fitness:
-        return PhosphorIcons.barbell;
+        return PhosphorIcons.barbell();
       case InsightPillar.finance:
-        return PhosphorIcons.wallet;
+        return PhosphorIcons.wallet();
       case InsightPillar.health:
-        return PhosphorIcons.heart;
+        return PhosphorIcons.heart();
     }
   }
 }
@@ -158,12 +158,12 @@ class MiniAIInsight extends StatelessWidget {
   final IconData icon;
   final Color color;
 
-  const MiniAIInsight({
+  MiniAIInsight({
     super.key,
     required this.text,
-    this.icon = PhosphorIcons.sparkle,
+    IconData? icon,
     this.color = AppColors.cyan,
-  });
+  }) : icon = icon ?? PhosphorIcons.sparkle();
 
   @override
   Widget build(BuildContext context) {

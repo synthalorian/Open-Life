@@ -6,7 +6,6 @@ import 'package:phosphor_flutter/phosphor_flutter.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_text_styles.dart';
 import '../../../shared/widgets/neon_card.dart';
-import '../../../shared/widgets/gradient_button.dart';
 import '../providers/ai_chat_provider.dart';
 
 class AIChatPage extends ConsumerStatefulWidget {
@@ -98,7 +97,7 @@ class _AIChatPageState extends ConsumerState<AIChatPage> {
                 ),
               ],
             ),
-            child: const Icon(PhosphorIcons.brain, color: Colors.white, size: 24),
+            child: Icon(PhosphorIcons.brain(), color: Colors.white, size: 24),
           ),
           const SizedBox(width: 16),
           Expanded(
@@ -173,7 +172,7 @@ class _AIChatPageState extends ConsumerState<AIChatPage> {
                   ),
                 ],
               ),
-              child: const Icon(PhosphorIcons.sparkle, size: 48, color: Colors.white),
+              child: Icon(PhosphorIcons.sparkle(), size: 48, color: Colors.white),
             ).animate().fadeIn().scale(duration: 600.ms),
             const SizedBox(height: 24),
             ShaderMask(
@@ -198,9 +197,9 @@ class _AIChatPageState extends ConsumerState<AIChatPage> {
               runSpacing: 12,
               alignment: WrapAlignment.center,
               children: [
-                _buildContextBadge('Fitness', PhosphorIcons.barbell, AppColors.fitnessPrimary),
-                _buildContextBadge('Finance', PhosphorIcons.wallet, AppColors.financePrimary),
-                _buildContextBadge('Health', PhosphorIcons.heart, AppColors.assurancePrimary),
+                _buildContextBadge('Fitness', PhosphorIcons.barbell(), AppColors.fitnessPrimary),
+                _buildContextBadge('Finance', PhosphorIcons.wallet(), AppColors.financePrimary),
+                _buildContextBadge('Health', PhosphorIcons.heart(), AppColors.assurancePrimary),
               ],
             ).animate().fadeIn(delay: 400.ms),
           ],
@@ -237,22 +236,22 @@ class _AIChatPageState extends ConsumerState<AIChatPage> {
         children: [
           _buildSuggestionCard(
             'How\'s my overall health?',
-            PhosphorIcons.heartbeat,
+            PhosphorIcons.heartbeat(),
             AppColors.assurancePrimary,
           ),
           _buildSuggestionCard(
             'Analyze my spending',
-            PhosphorIcons.chartPie,
+            PhosphorIcons.chartPie(),
             AppColors.financePrimary,
           ),
           _buildSuggestionCard(
             'Create a workout plan',
-            PhosphorIcons.barbell,
+            PhosphorIcons.barbell(),
             AppColors.fitnessPrimary,
           ),
           _buildSuggestionCard(
             'Weekly summary',
-            PhosphorIcons.calendar,
+            PhosphorIcons.calendar(),
             AppColors.electricPurple,
           ),
         ],
@@ -310,7 +309,7 @@ class _AIChatPageState extends ConsumerState<AIChatPage> {
                 gradient: AppColors.neonGlowGradient,
                 borderRadius: BorderRadius.circular(10),
               ),
-              child: const Icon(PhosphorIcons.brain, color: Colors.white, size: 18),
+              child: Icon(PhosphorIcons.brain(), color: Colors.white, size: 18),
             ),
             const SizedBox(width: 12),
           ],
@@ -391,7 +390,7 @@ class _AIChatPageState extends ConsumerState<AIChatPage> {
                 color: AppColors.backgroundCardLight,
                 borderRadius: BorderRadius.circular(10),
               ),
-              child: const Icon(PhosphorIcons.user, color: AppColors.textMuted, size: 18),
+              child: Icon(PhosphorIcons.user(), color: AppColors.textMuted, size: 18),
             ),
           ],
         ],
@@ -410,7 +409,7 @@ class _AIChatPageState extends ConsumerState<AIChatPage> {
               gradient: AppColors.neonGlowGradient,
               borderRadius: BorderRadius.circular(10),
             ),
-            child: const Icon(PhosphorIcons.brain, color: Colors.white, size: 18),
+            child: Icon(PhosphorIcons.brain(), color: Colors.white, size: 18),
           ),
           const SizedBox(width: 12),
           Container(
@@ -479,7 +478,7 @@ class _AIChatPageState extends ConsumerState<AIChatPage> {
                   border: InputBorder.none,
                   contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 14),
                   suffixIcon: IconButton(
-                    icon: const Icon(PhosphorIcons.microphone, color: AppColors.textMuted),
+                    icon: Icon(PhosphorIcons.microphone(), color: AppColors.textMuted),
                     onPressed: () {
                       // Voice input
                     },
@@ -503,7 +502,7 @@ class _AIChatPageState extends ConsumerState<AIChatPage> {
             ),
             child: IconButton(
               icon: Icon(
-                chatState.isTyping ? PhosphorIcons.hourglass : PhosphorIcons.paperPlaneTiltFill,
+                chatState.isTyping ? PhosphorIcons.hourglass() : PhosphorIcons.paperPlaneTilt(),
                 color: Colors.white,
               ),
               onPressed: chatState.isTyping

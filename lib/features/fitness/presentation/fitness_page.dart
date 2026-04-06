@@ -87,11 +87,11 @@ class _FitnessPageState extends ConsumerState<FitnessPage> with SingleTickerProv
               indicatorColor: AppColors.fitnessPrimary,
               labelColor: AppColors.fitnessPrimary,
               unselectedLabelColor: AppColors.textMuted,
-              tabs: const [
-                Tab(icon: Icon(PhosphorIcons.chartLine)),
-                Tab(icon: Icon(PhosphorIcons.barbell)),
-                Tab(icon: Icon(PhosphorIcons.forkKnife)),
-                Tab(icon: Icon(PhosphorIcons.sparkle)),
+              tabs: [
+                Tab(icon: Icon(PhosphorIcons.chartLine())),
+                Tab(icon: Icon(PhosphorIcons.barbell())),
+                Tab(icon: Icon(PhosphorIcons.forkKnife())),
+                Tab(icon: Icon(PhosphorIcons.sparkle())),
               ],
             ),
           ),
@@ -123,7 +123,7 @@ class _FitnessPageState extends ConsumerState<FitnessPage> with SingleTickerProv
                   title: 'Steps',
                   value: state.steps.toString(),
                   subtitle: '/ ${state.stepsGoal}',
-                  icon: PhosphorIcons.footprints,
+                  icon: PhosphorIcons.footprints(),
                   color: AppColors.fitnessPrimary,
                 ),
               ),
@@ -133,7 +133,7 @@ class _FitnessPageState extends ConsumerState<FitnessPage> with SingleTickerProv
                   title: 'Calories',
                   value: state.caloriesBurned.toString(),
                   subtitle: 'burned',
-                  icon: PhosphorIcons.fire,
+                  icon: PhosphorIcons.fire(),
                   color: AppColors.sunsetOrange,
                 ),
               ),
@@ -147,7 +147,7 @@ class _FitnessPageState extends ConsumerState<FitnessPage> with SingleTickerProv
                   title: 'Active Minutes',
                   value: state.activeMinutes.toString(),
                   subtitle: 'min',
-                  icon: PhosphorIcons.timer,
+                  icon: PhosphorIcons.timer(),
                   color: AppColors.electricPurple,
                 ),
               ),
@@ -155,9 +155,9 @@ class _FitnessPageState extends ConsumerState<FitnessPage> with SingleTickerProv
               Expanded(
                 child: NeonStatCard(
                   title: 'Heart Rate',
-                  value: '${state.heartRate}',
+                  value: '${state.todayData?.restingHeartRate ?? 0}',
                   subtitle: 'bpm avg',
-                  icon: PhosphorIcons.heartbeat,
+                  icon: PhosphorIcons.heartbeat(),
                   color: AppColors.neonPink,
                 ),
               ),
@@ -197,7 +197,7 @@ class _FitnessPageState extends ConsumerState<FitnessPage> with SingleTickerProv
                   ),
                   borderData: FlBorderData(show: false),
                   gridData: const FlGridData(show: false),
-                  barGroups: state.weeklySteps.asMap().entries.map((entry) {
+                  barGroups: state.last7Days.map((d) => d.steps.toDouble()).toList().asMap().entries.map((entry) {
                     return BarChartGroupData(
                       x: entry.key,
                       barRods: [
@@ -217,7 +217,7 @@ class _FitnessPageState extends ConsumerState<FitnessPage> with SingleTickerProv
 
           // AI Insight
           const SizedBox(height: 24),
-          _buildAIInsight(state.aiInsight).animate().fadeIn(delay: 400.ms),
+          _buildAIInsight(state.aiInsight ?? '').animate().fadeIn(delay: 400.ms),
         ],
       ),
     );
@@ -235,10 +235,10 @@ class _FitnessPageState extends ConsumerState<FitnessPage> with SingleTickerProv
             spacing: 12,
             runSpacing: 12,
             children: [
-              _buildWorkoutTypeCard('Run', PhosphorIcons.personSimpleRun, AppColors.fitnessPrimary),
-              _buildWorkoutTypeCard('Walk', PhosphorIcons.personSimpleWalk, AppColors.cyan),
-              _buildWorkoutTypeCard('Cycle', PhosphorIcons.bicycle, AppColors.electricPurple),
-              _buildWorkoutTypeCard('Gym', PhosphorIcons.barbell, AppColors.neonPink),
+              _buildWorkoutTypeCard('Run', PhosphorIcons.personSimpleRun(), AppColors.fitnessPrimary),
+              _buildWorkoutTypeCard('Walk', PhosphorIcons.personSimpleWalk(), AppColors.cyan),
+              _buildWorkoutTypeCard('Cycle', PhosphorIcons.bicycle(), AppColors.electricPurple),
+              _buildWorkoutTypeCard('Gym', PhosphorIcons.barbell(), AppColors.neonPink),
             ],
           ),
           const SizedBox(height: 24),
@@ -248,13 +248,13 @@ class _FitnessPageState extends ConsumerState<FitnessPage> with SingleTickerProv
             'Full Body HIIT',
             '20 min • High intensity',
             'Based on your goals',
-            PhosphorIcons.lightningFill,
+            PhosphorIconsFill.lightning,
           ),
           _buildSuggestedWorkout(
             'Recovery Yoga',
             '15 min • Low intensity',
             'You seem stressed today',
-            PhosphorIcons.flowerLotus,
+            PhosphorIcons.flowerLotus(),
           ),
         ],
       ),
@@ -274,7 +274,7 @@ class _FitnessPageState extends ConsumerState<FitnessPage> with SingleTickerProv
                   title: 'Calories',
                   value: '1,450',
                   subtitle: 'Remaining: 550',
-                  icon: PhosphorIcons.fire,
+                  icon: PhosphorIcons.fire(),
                   color: AppColors.sunsetOrange,
                 ),
               ),
@@ -295,7 +295,7 @@ class _FitnessPageState extends ConsumerState<FitnessPage> with SingleTickerProv
           const SizedBox(height: 24),
           GradientButton(
             text: 'Log Meal with AI',
-            icon: PhosphorIcons.camera,
+            icon: PhosphorIcons.camera(),
             gradient: AppColors.sunsetGradient,
           ),
         ],
@@ -324,7 +324,7 @@ class _FitnessPageState extends ConsumerState<FitnessPage> with SingleTickerProv
                     gradient: AppColors.fitnessGradient,
                     shape: BoxShape.circle,
                   ),
-                  child: const Icon(PhosphorIcons.brain, size: 32, color: Colors.white),
+                  child: Icon(PhosphorIcons.brain(), size: 32, color: Colors.white),
                 ),
                 const SizedBox(height: 16),
                 Text('AI Fitness Coach', style: AppTextStyles.h3),
@@ -337,7 +337,7 @@ class _FitnessPageState extends ConsumerState<FitnessPage> with SingleTickerProv
                 const SizedBox(height: 24),
                 GradientButton(
                   text: 'Start Chat',
-                  icon: PhosphorIcons.chatCircle,
+                  icon: PhosphorIcons.chatCircle(),
                   gradient: AppColors.fitnessGradient,
                 ),
               ],
@@ -370,7 +370,7 @@ class _FitnessPageState extends ConsumerState<FitnessPage> with SingleTickerProv
               color: AppColors.cyan.withOpacity(0.2),
               borderRadius: BorderRadius.circular(12),
             ),
-            child: const Icon(PhosphorIcons.sparkle, color: AppColors.cyan),
+            child: Icon(PhosphorIcons.sparkle(), color: AppColors.cyan),
           ),
           const SizedBox(width: 16),
           Expanded(
@@ -429,7 +429,7 @@ class _FitnessPageState extends ConsumerState<FitnessPage> with SingleTickerProv
               ],
             ),
           ),
-          const Icon(PhosphorIcons.playCircleFill, color: AppColors.fitnessPrimary),
+          Icon(PhosphorIconsFill.playCircle, color: AppColors.fitnessPrimary),
         ],
       ),
     );
@@ -463,7 +463,7 @@ class _FitnessPageState extends ConsumerState<FitnessPage> with SingleTickerProv
         child: Row(
           children: [
             Expanded(child: Text(question, style: AppTextStyles.bodyMedium)),
-            const Icon(PhosphorIcons.caretRight, color: AppColors.textMuted, size: 20),
+            Icon(PhosphorIcons.caretRight(), color: AppColors.textMuted, size: 20),
           ],
         ),
       ),

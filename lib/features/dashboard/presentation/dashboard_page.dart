@@ -71,7 +71,7 @@ class DashboardPage extends ConsumerWidget {
                           title: 'Steps Today',
                           value: dashboardState.stepsToday.toString(),
                           subtitle: 'Goal: 10,000',
-                          icon: PhosphorIcons.footprints,
+                          icon: PhosphorIcons.footprints(),
                           color: AppColors.fitnessPrimary,
                           onTap: () => context.go('/fitness'),
                         ),
@@ -82,7 +82,7 @@ class DashboardPage extends ConsumerWidget {
                           title: 'Budget Left',
                           value: '\$${dashboardState.budgetRemaining}',
                           subtitle: 'This month',
-                          icon: PhosphorIcons.wallet,
+                          icon: PhosphorIcons.wallet(),
                           color: AppColors.financePrimary,
                           onTap: () => context.go('/finance'),
                         ),
@@ -97,7 +97,7 @@ class DashboardPage extends ConsumerWidget {
                           title: 'Calories',
                           value: dashboardState.caloriesToday.toString(),
                           subtitle: 'Remaining: ${dashboardState.caloriesRemaining}',
-                          icon: PhosphorIcons.fire,
+                          icon: PhosphorIcons.fire(),
                           color: AppColors.sunsetOrange,
                         ),
                       ),
@@ -107,7 +107,7 @@ class DashboardPage extends ConsumerWidget {
                           title: 'Next Appt',
                           value: dashboardState.nextAppointment ?? 'None',
                           subtitle: 'Health checkup',
-                          icon: PhosphorIcons.calendarCheck,
+                          icon: PhosphorIcons.calendarCheck(),
                           color: AppColors.assurancePrimary,
                           onTap: () => context.go('/assurance'),
                         ),
@@ -134,8 +134,8 @@ class DashboardPage extends ConsumerWidget {
                           gradient: AppColors.neonGlowGradient,
                           borderRadius: BorderRadius.circular(8),
                         ),
-                        child: const Icon(
-                          PhosphorIcons.sparkle,
+                        child: Icon(
+                          PhosphorIcons.sparkle(),
                           color: Colors.white,
                           size: 18,
                         ),
@@ -200,8 +200,8 @@ class DashboardPage extends ConsumerWidget {
                 ),
               ],
             ),
-            child: const Icon(
-              PhosphorIcons.brain,
+            child: Icon(
+              PhosphorIcons.brain(),
               color: Colors.white,
               size: 24,
             ),
@@ -223,8 +223,8 @@ class DashboardPage extends ConsumerWidget {
               ],
             ),
           ),
-          const Icon(
-            PhosphorIcons.caretRight,
+          Icon(
+            PhosphorIcons.caretRight(),
             color: AppColors.textMuted,
           ),
         ],
