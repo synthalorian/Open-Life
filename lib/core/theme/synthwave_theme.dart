@@ -28,7 +28,7 @@ class SynthwaveTheme {
       centerTitle: true,
       titleTextStyle: AppTextStyles.h4,
     ),
-    cardTheme: CardTheme(
+    cardTheme: CardThemeData(
       color: AppColors.backgroundCard,
       elevation: 8,
       shape: RoundedRectangleBorder(
@@ -164,13 +164,13 @@ class SynthwaveTheme {
         return AppColors.backgroundCardLight;
       }),
     ),
-    tabBarTheme: const TabBarTheme(
+    tabBarTheme: const TabBarThemeData(
       labelColor: AppColors.neonPink,
       unselectedLabelColor: AppColors.textMuted,
       indicatorColor: AppColors.neonPink,
       labelStyle: TextStyle(fontWeight: FontWeight.w600),
     ),
-    dialogTheme: DialogTheme(
+    dialogTheme: DialogThemeData(
       backgroundColor: AppColors.backgroundCard,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(20),
