@@ -1,4 +1,4 @@
-# Open Life 🎹🦞
+# Open Life 🎹🦈
 
 **The ultimate AI-powered life management app with synthwave aesthetics.**
 

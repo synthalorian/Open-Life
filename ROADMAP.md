@@ -195,4 +195,4 @@ final insights = await DataAggregator(ref).generateCrossPillarInsights();
 
 ---
 
-**This is AI-first design. Every feature, every insight, every recommendation is powered by AI that understands your whole life.** 🎹🦞
+**This is AI-first design. Every feature, every insight, every recommendation is powered by AI that understands your whole life.** 🎹🦈
