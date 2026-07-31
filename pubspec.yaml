@@ -34,7 +34,7 @@ dependencies:
   
   # Icons
   cupertino_icons: ^1.0.6
-  phosphor_flutter: ^2.0.1
+  # phosphor_flutter removed - incompatible with Flutter 3.22+
 
 dev_dependencies:
   flutter_test:

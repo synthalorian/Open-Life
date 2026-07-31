@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_animate/flutter_animate.dart';
-import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:intl/intl.dart';
 import 'core/theme/app_colors.dart';
 import 'core/theme/app_text_styles.dart';
@@ -128,13 +127,13 @@ class _MainScreenState extends State<MainScreen> {
     floatingActionButton: const CompactAIButton(),
     bottomNavigationBar: NavigationBar(
       selectedIndex: _selectedIndex, onDestinationSelected: (i) => setState(() => _selectedIndex = i),
-      backgroundColor: AppColors.backgroundDarker, indicatorColor: AppColors.neonPink.withOpacity(0.2),
+      backgroundColor: AppColors.backgroundDarker, indicatorColor: AppColors.neonPink.withValues(alpha: 0.2),
       destinations: [
-        NavigationDestination(icon: Icon(PhosphorIcons.house()), label: 'Home'),
-        NavigationDestination(icon: Icon(PhosphorIcons.barbell()), label: 'Fitness'),
-        NavigationDestination(icon: Icon(PhosphorIcons.wallet()), label: 'Finance'),
-        NavigationDestination(icon: Icon(PhosphorIcons.heartbeat()), label: 'Health'),
-        NavigationDestination(icon: Icon(PhosphorIcons.brain()), label: 'Mental'),
+        NavigationDestination(icon: Icon(Icons.home), label: 'Home'),
+        NavigationDestination(icon: Icon(Icons.fitness_center), label: 'Fitness'),
+        NavigationDestination(icon: Icon(Icons.account_balance_wallet), label: 'Finance'),
+        NavigationDestination(icon: Icon(Icons.favorite_border), label: 'Health'),
+        NavigationDestination(icon: Icon(Icons.psychology), label: 'Mental'),
       ],
     ),
   );
@@ -145,7 +144,7 @@ class CompactAIButton extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) => FloatingActionButton.small(
     onPressed: () => showModalBottomSheet(context: context, isScrollControlled: true, backgroundColor: Colors.transparent, builder: (_) => const AIChatSheet()),
-    backgroundColor: AppColors.neonPink, child: Icon(PhosphorIcons.sparkle(), color: Colors.white, size: 20),
+    backgroundColor: AppColors.neonPink, child: Icon(Icons.auto_awesome, color: Colors.white, size: 20),
   ).animate().scale(delay: 500.ms, duration: 300.ms);
 }
 
@@ -191,12 +190,12 @@ class _AIChatSheetState extends ConsumerState<AIChatSheet> {
     
     return Container(
       height: MediaQuery.of(context).size.height * 0.7,
-      decoration: BoxDecoration(color: AppColors.backgroundDark, borderRadius: const BorderRadius.vertical(top: Radius.circular(24)), border: Border(top: BorderSide(color: AppColors.neonPink.withOpacity(0.5), width: 2))),
+      decoration: BoxDecoration(color: AppColors.backgroundDark, borderRadius: const BorderRadius.vertical(top: Radius.circular(24)), border: Border(top: BorderSide(color: AppColors.neonPink.withValues(alpha: 0.5), width: 2))),
       child: Column(children: [
         Container(
           padding: const EdgeInsets.all(16),
-          decoration: BoxDecoration(gradient: AppColors.sunsetGradient, borderRadius: const BorderRadius.vertical(top: Radius.circular(22))),
-          child: Row(children: [Icon(PhosphorIcons.sparkle(), color: Colors.white, size: 24), const SizedBox(width: 12), Expanded(child: Text('Open Life AI', style: AppTextStyles.h5.copyWith(color: Colors.white))), IconButton(onPressed: () => Navigator.pop(context), icon: Icon(PhosphorIcons.x(), color: Colors.white, size: 20))]),
+          decoration: const BoxDecoration(gradient: AppColors.sunsetGradient, borderRadius: BorderRadius.vertical(top: Radius.circular(22))),
+          child: Row(children: [Icon(Icons.auto_awesome, color: Colors.white, size: 24), const SizedBox(width: 12), Expanded(child: Text('Open Life AI', style: AppTextStyles.h5.copyWith(color: Colors.white))), IconButton(onPressed: () => Navigator.pop(context), icon: Icon(Icons.close, color: Colors.white, size: 20))]),
         ),
         Expanded(child: ListView.builder(padding: const EdgeInsets.all(16), itemCount: messages.length + (isTyping ? 1 : 0), itemBuilder: (context, i) {
           if (i == messages.length && isTyping) return const Padding(padding: EdgeInsets.all(8), child: Text('Thinking...', style: TextStyle(color: AppColors.textMuted)));
@@ -207,7 +206,7 @@ class _AIChatSheetState extends ConsumerState<AIChatSheet> {
         Container(padding: const EdgeInsets.all(16), child: Row(children: [
           Expanded(child: TextField(controller: _controller, style: AppTextStyles.bodyMedium, decoration: InputDecoration(hintText: 'Ask me anything...', filled: true, fillColor: AppColors.backgroundDarker, border: OutlineInputBorder(borderRadius: BorderRadius.circular(24), borderSide: BorderSide.none), contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12)), onSubmitted: (_) => _sendMessage())),
           const SizedBox(width: 8),
-          FloatingActionButton.small(onPressed: _sendMessage, backgroundColor: AppColors.neonPink, child: Icon(PhosphorIcons.paperPlaneRight(), color: Colors.white, size: 20)),
+          FloatingActionButton.small(onPressed: _sendMessage, backgroundColor: AppColors.neonPink, child: Icon(Icons.send, color: Colors.white, size: 20)),
         ])),
       ]),
     );
@@ -233,7 +232,7 @@ class DashboardScreen extends ConsumerWidget {
       child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
         Row(children: [
           Expanded(child: ShaderMask(shaderCallback: (b) => AppColors.sunsetGradient.createShader(b), child: Text('Open Life', style: AppTextStyles.h1.copyWith(color: Colors.white)))),
-          IconButton(onPressed: () {}, icon: Icon(PhosphorIcons.gear(), color: AppColors.textMuted)),
+          IconButton(onPressed: () {}, icon: Icon(Icons.settings, color: AppColors.textMuted)),
         ]),
         Text(DateFormat('EEEE, MMMM d').format(DateTime.now()), style: AppTextStyles.bodyMedium),
         const SizedBox(height: 24),
@@ -241,11 +240,11 @@ class DashboardScreen extends ConsumerWidget {
         // Wellness Score
         Container(
           padding: const EdgeInsets.all(20),
-          decoration: BoxDecoration(gradient: LinearGradient(colors: [AppColors.neonPink.withOpacity(0.3), AppColors.backgroundCard]), borderRadius: BorderRadius.circular(20), border: Border.all(color: AppColors.neonPink.withOpacity(0.5))),
+          decoration: BoxDecoration(gradient: LinearGradient(colors: [AppColors.neonPink.withValues(alpha: 0.3), AppColors.backgroundCard]), borderRadius: BorderRadius.circular(20), border: Border.all(color: AppColors.neonPink.withValues(alpha: 0.5))),
           child: Column(children: [
             Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
               Text('Daily Wellness Score', style: AppTextStyles.h5.copyWith(color: AppColors.neonPink)),
-              Container(padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4), decoration: BoxDecoration(color: AppColors.success.withOpacity(0.2), borderRadius: BorderRadius.circular(12)), child: Text('78%', style: AppTextStyles.bodyMedium.copyWith(color: AppColors.success, fontWeight: FontWeight.bold))),
+              Container(padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4), decoration: BoxDecoration(color: AppColors.success.withValues(alpha: 0.2), borderRadius: BorderRadius.circular(12)), child: Text('78%', style: AppTextStyles.bodyMedium.copyWith(color: AppColors.success, fontWeight: FontWeight.bold))),
             ]),
             const SizedBox(height: 16),
             Row(children: [
@@ -260,15 +259,15 @@ class DashboardScreen extends ConsumerWidget {
         
         // Quick Stats
         Row(children: [
-          Expanded(child: _buildQuickStat('Steps', '$fitness', '/$stepGoal', PhosphorIcons.footprints(), AppColors.fitnessPrimary, () => _showStepsDialog(context, ref))),
+          Expanded(child: _buildQuickStat('Steps', '$fitness', '/$stepGoal', Icons.directions_walk, AppColors.fitnessPrimary, () => _showStepsDialog(context, ref))),
           const SizedBox(width: 12),
-          Expanded(child: _buildQuickStat('Water', '$water', 'cups', PhosphorIcons.drop(), AppColors.cyan, () => ref.read(waterIntakeProvider.notifier).state++)),
+          Expanded(child: _buildQuickStat('Water', '$water', 'cups', Icons.water_drop, AppColors.cyan, () => ref.read(waterIntakeProvider.notifier).state++)),
         ]),
         const SizedBox(height: 12),
         Row(children: [
-          Expanded(child: _buildQuickStat('Balance', '\$${balance.toStringAsFixed(0)}', 'available', PhosphorIcons.wallet(), AppColors.financePrimary, () {})),
+          Expanded(child: _buildQuickStat('Balance', '\$${balance.toStringAsFixed(0)}', 'available', Icons.account_balance_wallet, AppColors.financePrimary, () {})),
           const SizedBox(width: 12),
-          Expanded(child: _buildQuickStat('Mood', '$mood', '/10', PhosphorIcons.smiley(), AppColors.neonPink, () {})),
+          Expanded(child: _buildQuickStat('Mood', '$mood', '/10', Icons.sentiment_satisfied, AppColors.neonPink, () {})),
         ]),
       ]),
     ))]));
@@ -283,9 +282,9 @@ class DashboardScreen extends ConsumerWidget {
     onTap: onTap,
     child: Container(
       padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(color: AppColors.backgroundCard, borderRadius: BorderRadius.circular(16), border: Border.all(color: color.withOpacity(0.3))),
+      decoration: BoxDecoration(color: AppColors.backgroundCard, borderRadius: BorderRadius.circular(16), border: Border.all(color: color.withValues(alpha: 0.3))),
       child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-        Row(children: [Container(padding: const EdgeInsets.all(6), decoration: BoxDecoration(color: color.withOpacity(0.2), borderRadius: BorderRadius.circular(8)), child: Icon(icon, color: color, size: 16)), const SizedBox(width: 6), Text(title, style: AppTextStyles.bodySmall)]),
+        Row(children: [Container(padding: const EdgeInsets.all(6), decoration: BoxDecoration(color: color.withValues(alpha: 0.2), borderRadius: BorderRadius.circular(8)), child: Icon(icon, color: color, size: 16)), const SizedBox(width: 6), Text(title, style: AppTextStyles.bodySmall)]),
         const SizedBox(height: 8), Text(value, style: AppTextStyles.h3.copyWith(color: color)), Text(subtitle, style: AppTextStyles.caption),
       ]),
     ),
@@ -298,7 +297,7 @@ class DashboardScreen extends ConsumerWidget {
       title: Text('Add Steps', style: AppTextStyles.h4),
       content: TextField(controller: ctrl, keyboardType: TextInputType.number, decoration: InputDecoration(hintText: 'Number of steps', filled: true, fillColor: AppColors.backgroundDarker, border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)))),
       actions: [
-        TextButton(onPressed: () => Navigator.pop(context), child: Text('Cancel', style: TextStyle(color: AppColors.textMuted))),
+        TextButton(onPressed: () => Navigator.pop(context), child: const Text('Cancel', style: TextStyle(color: AppColors.textMuted))),
         ElevatedButton(onPressed: () { ref.read(stepCountProvider.notifier).state += int.tryParse(ctrl.text) ?? 0; Navigator.pop(context); }, style: ElevatedButton.styleFrom(backgroundColor: AppColors.fitnessPrimary), child: const Text('Add')),
       ],
     ));
@@ -332,16 +331,16 @@ class FitnessScreen extends ConsumerWidget {
           padding: const EdgeInsets.all(24),
           decoration: BoxDecoration(gradient: AppColors.fitnessGradient, borderRadius: BorderRadius.circular(20)),
           child: Column(children: [
-            Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [Text('Steps Today', style: AppTextStyles.h4.copyWith(color: Colors.white)), Icon(PhosphorIcons.footprints(), color: Colors.white, size: 32)]),
+            Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [Text('Steps Today', style: AppTextStyles.h4.copyWith(color: Colors.white)), Icon(Icons.directions_walk, color: Colors.white, size: 32)]),
             const SizedBox(height: 20),
             Row(crossAxisAlignment: CrossAxisAlignment.end, children: [Text('$steps', style: AppTextStyles.statLarge.copyWith(color: Colors.white, fontSize: 48)), const SizedBox(width: 8), Text('/ $stepGoal', style: AppTextStyles.bodyLarge.copyWith(color: Colors.white70))]),
             const SizedBox(height: 16),
             LinearProgressIndicator(value: (steps / stepGoal).clamp(0, 1), backgroundColor: Colors.white24, valueColor: const AlwaysStoppedAnimation(Colors.white), borderRadius: BorderRadius.circular(8), minHeight: 12),
             const SizedBox(height: 16),
             Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
-              _buildMiniStat('${(steps * 0.04).round()}', 'cal', PhosphorIcons.fire()),
-              _buildMiniStat('${(steps / 2000).round()}', 'km', PhosphorIcons.mapPin()),
-              _buildMiniStat('45', 'min', PhosphorIcons.timer()),
+              _buildMiniStat('${(steps * 0.04).round()}', 'cal', Icons.local_fire_department),
+              _buildMiniStat('${(steps / 2000).round()}', 'km', Icons.location_on),
+              _buildMiniStat('45', 'min', Icons.timer),
             ]),
           ]),
         ),
@@ -350,13 +349,13 @@ class FitnessScreen extends ConsumerWidget {
         // Water Tracker
         Container(
           padding: const EdgeInsets.all(16),
-          decoration: BoxDecoration(color: AppColors.backgroundCard, borderRadius: BorderRadius.circular(16), border: Border.all(color: AppColors.cyan.withOpacity(0.3))),
+          decoration: BoxDecoration(color: AppColors.backgroundCard, borderRadius: BorderRadius.circular(16), border: Border.all(color: AppColors.cyan.withValues(alpha: 0.3))),
           child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
             Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [Text('Water Intake', style: AppTextStyles.h5.copyWith(color: AppColors.cyan)), Text('$water / 8 cups', style: AppTextStyles.bodyMedium)]),
             const SizedBox(height: 12),
             Row(children: List.generate(8, (i) => Expanded(child: GestureDetector(
               onTap: () => ref.read(waterIntakeProvider.notifier).state = i + 1,
-              child: Container(height: 40, margin: const EdgeInsets.symmetric(horizontal: 2), decoration: BoxDecoration(color: i < water ? AppColors.cyan.withOpacity(0.6) : AppColors.backgroundDarker, borderRadius: BorderRadius.circular(4)), child: Icon(PhosphorIcons.drop(), color: i < water ? Colors.white : AppColors.textMuted, size: 16)),
+              child: Container(height: 40, margin: const EdgeInsets.symmetric(horizontal: 2), decoration: BoxDecoration(color: i < water ? AppColors.cyan.withValues(alpha: 0.6) : AppColors.backgroundDarker, borderRadius: BorderRadius.circular(4)), child: Icon(Icons.water_drop, color: i < water ? Colors.white : AppColors.textMuted, size: 16)),
             )))),
           ]),
         ),
@@ -394,7 +393,7 @@ class FitnessScreen extends ConsumerWidget {
           child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
             Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [Text(g['name'], style: AppTextStyles.bodyMedium), Text('${g['current']}/${g['target']}', style: AppTextStyles.caption)]),
             const SizedBox(height: 8),
-            LinearProgressIndicator(value: (g['current'] / g['target']).clamp(0, 1), backgroundColor: AppColors.backgroundDarker, valueColor: AlwaysStoppedAnimation(AppColors.fitnessPrimary), borderRadius: BorderRadius.circular(4), minHeight: 8),
+            LinearProgressIndicator(value: (g['current'] / g['target']).clamp(0, 1), backgroundColor: AppColors.backgroundDarker, valueColor: const AlwaysStoppedAnimation(AppColors.fitnessPrimary), borderRadius: BorderRadius.circular(4), minHeight: 8),
           ]),
         )),
         const SizedBox(height: 24),
@@ -403,16 +402,16 @@ class FitnessScreen extends ConsumerWidget {
         Text('Quick Actions', style: AppTextStyles.h4),
         const SizedBox(height: 12),
         Wrap(spacing: 12, runSpacing: 12, children: [
-          _buildActionChip('Log Workout', PhosphorIcons.barbell(), AppColors.fitnessPrimary, () {}),
-          _buildActionChip('Log Meal', PhosphorIcons.forkKnife(), AppColors.sunsetOrange, () {}),
-          _buildActionChip('Progress Photo', PhosphorIcons.camera(), AppColors.cyan, () {}),
-          _buildActionChip('Update Measurements', PhosphorIcons.ruler(), AppColors.electricPurple, () {}),
+          _buildActionChip('Log Workout', Icons.fitness_center, AppColors.fitnessPrimary, () {}),
+          _buildActionChip('Log Meal', Icons.restaurant, AppColors.sunsetOrange, () {}),
+          _buildActionChip('Progress Photo', Icons.camera_alt, AppColors.cyan, () {}),
+          _buildActionChip('Update Measurements', Icons.straighten, AppColors.electricPurple, () {}),
         ]),
         const SizedBox(height: 24),
         
         // Recent Workouts
         if (workouts.isNotEmpty) ...[Text('Recent Workouts', style: AppTextStyles.h4), const SizedBox(height: 12), ...workouts.take(5).map((w) => ListTile(
-          leading: Container(padding: const EdgeInsets.all(8), decoration: BoxDecoration(color: AppColors.fitnessPrimary.withOpacity(0.2), borderRadius: BorderRadius.circular(8)), child: Icon(PhosphorIcons.barbell(), color: AppColors.fitnessPrimary)),
+          leading: Container(padding: const EdgeInsets.all(8), decoration: BoxDecoration(color: AppColors.fitnessPrimary.withValues(alpha: 0.2), borderRadius: BorderRadius.circular(8)), child: Icon(Icons.fitness_center, color: AppColors.fitnessPrimary)),
           title: Text(w['name'] ?? 'Workout', style: AppTextStyles.bodyMedium),
           subtitle: Text('${w['duration']} min • ${w['calories']} cal', style: AppTextStyles.caption),
           trailing: Text(DateFormat('h:mm a').format(DateTime.now()), style: AppTextStyles.caption.copyWith(color: AppColors.textMuted)),
@@ -430,7 +429,7 @@ class FitnessScreen extends ConsumerWidget {
   
   Widget _buildActionChip(String label, IconData icon, Color color, VoidCallback onTap) => GestureDetector(
     onTap: onTap,
-    child: Container(padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12), decoration: BoxDecoration(color: AppColors.backgroundCard, borderRadius: BorderRadius.circular(12), border: Border.all(color: color.withOpacity(0.3))), child: Row(mainAxisSize: MainAxisSize.min, children: [Icon(icon, color: color, size: 20), const SizedBox(width: 8), Text(label, style: AppTextStyles.bodyMedium)])),
+    child: Container(padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12), decoration: BoxDecoration(color: AppColors.backgroundCard, borderRadius: BorderRadius.circular(12), border: Border.all(color: color.withValues(alpha: 0.3))), child: Row(mainAxisSize: MainAxisSize.min, children: [Icon(icon, color: color, size: 20), const SizedBox(width: 8), Text(label, style: AppTextStyles.bodyMedium)])),
   );
 }
 
@@ -462,7 +461,7 @@ class FinanceScreen extends ConsumerWidget {
           padding: const EdgeInsets.all(24),
           decoration: BoxDecoration(gradient: AppColors.financeGradient, borderRadius: BorderRadius.circular(20)),
           child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-            Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [Text('Total Balance', style: AppTextStyles.h4.copyWith(color: Colors.white70)), Icon(PhosphorIcons.wallet(), color: Colors.white, size: 28)]),
+            Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [Text('Total Balance', style: AppTextStyles.h4.copyWith(color: Colors.white70)), Icon(Icons.account_balance_wallet, color: Colors.white, size: 28)]),
             const SizedBox(height: 8), Text('\$${balance.toStringAsFixed(2)}', style: AppTextStyles.statLarge.copyWith(color: Colors.white)),
             const SizedBox(height: 20),
             Row(children: [
@@ -490,7 +489,7 @@ class FinanceScreen extends ConsumerWidget {
           child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
             Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [Text(g['name'], style: AppTextStyles.bodyMedium), Text('\$${g['current'].toStringAsFixed(0)} / \$${g['target'].toStringAsFixed(0)}', style: AppTextStyles.caption)]),
             const SizedBox(height: 8),
-            LinearProgressIndicator(value: (g['current'] / g['target']).clamp(0, 1), backgroundColor: AppColors.backgroundDarker, valueColor: AlwaysStoppedAnimation(AppColors.financePrimary), borderRadius: BorderRadius.circular(4), minHeight: 8),
+            LinearProgressIndicator(value: (g['current'] / g['target']).clamp(0, 1), backgroundColor: AppColors.backgroundDarker, valueColor: const AlwaysStoppedAnimation(AppColors.financePrimary), borderRadius: BorderRadius.circular(4), minHeight: 8),
             const SizedBox(height: 4), Text('Target: ${g['deadline']}', style: AppTextStyles.caption.copyWith(color: AppColors.textMuted)),
           ]),
         )),
@@ -504,7 +503,7 @@ class FinanceScreen extends ConsumerWidget {
           padding: const EdgeInsets.all(12),
           decoration: BoxDecoration(color: AppColors.backgroundCard, borderRadius: BorderRadius.circular(12)),
           child: Row(children: [
-            Container(padding: const EdgeInsets.all(8), decoration: BoxDecoration(color: b['paid'] ? AppColors.success.withOpacity(0.2) : AppColors.warning.withOpacity(0.2), borderRadius: BorderRadius.circular(8)), child: Icon(b['paid'] ? PhosphorIcons.checkCircle() : PhosphorIcons.warningCircle(), color: b['paid'] ? AppColors.success : AppColors.warning)),
+            Container(padding: const EdgeInsets.all(8), decoration: BoxDecoration(color: b['paid'] ? AppColors.success.withValues(alpha: 0.2) : AppColors.warning.withValues(alpha: 0.2), borderRadius: BorderRadius.circular(8)), child: Icon(b['paid'] ? Icons.check_circle : Icons.error_outline, color: b['paid'] ? AppColors.success : AppColors.warning)),
             const SizedBox(width: 12),
             Expanded(child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [Text(b['name'], style: AppTextStyles.bodyMedium), Text('Due: ${b['dueDate']}', style: AppTextStyles.caption)])),
             Text('\$${b['amount'].toStringAsFixed(0)}', style: AppTextStyles.bodyLarge.copyWith(color: b['paid'] ? AppColors.success : AppColors.textPrimary)),
@@ -516,10 +515,10 @@ class FinanceScreen extends ConsumerWidget {
         Text('Quick Actions', style: AppTextStyles.h4),
         const SizedBox(height: 12),
         Wrap(spacing: 12, runSpacing: 12, children: [
-          _buildActionChip('Add Income', PhosphorIcons.plus(), AppColors.success, () {}),
-          _buildActionChip('Add Expense', PhosphorIcons.minus(), AppColors.error, () {}),
-          _buildActionChip('Transfer', PhosphorIcons.arrowsLeftRight(), AppColors.cyan, () {}),
-          _buildActionChip('Add Bill', PhosphorIcons.receipt(), AppColors.warning, () {}),
+          _buildActionChip('Add Income', Icons.add, AppColors.success, () {}),
+          _buildActionChip('Add Expense', Icons.remove, AppColors.error, () {}),
+          _buildActionChip('Transfer', Icons.swap_horiz, AppColors.cyan, () {}),
+          _buildActionChip('Add Bill', Icons.receipt, AppColors.warning, () {}),
         ]),
       ]),
     ))]));
@@ -541,7 +540,7 @@ class FinanceScreen extends ConsumerWidget {
   
   Widget _buildActionChip(String label, IconData icon, Color color, VoidCallback onTap) => GestureDetector(
     onTap: onTap,
-    child: Container(padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12), decoration: BoxDecoration(color: AppColors.backgroundCard, borderRadius: BorderRadius.circular(12), border: Border.all(color: color.withOpacity(0.3))), child: Row(mainAxisSize: MainAxisSize.min, children: [Icon(icon, color: color, size: 20), const SizedBox(width: 8), Text(label, style: AppTextStyles.bodyMedium)])),
+    child: Container(padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12), decoration: BoxDecoration(color: AppColors.backgroundCard, borderRadius: BorderRadius.circular(12), border: Border.all(color: color.withValues(alpha: 0.3))), child: Row(mainAxisSize: MainAxisSize.min, children: [Icon(icon, color: color, size: 20), const SizedBox(width: 8), Text(label, style: AppTextStyles.bodyMedium)])),
   );
 }
 
@@ -572,7 +571,7 @@ class HealthScreen extends ConsumerWidget {
           padding: const EdgeInsets.all(24),
           decoration: BoxDecoration(gradient: AppColors.assuranceGradient, borderRadius: BorderRadius.circular(20)),
           child: Column(children: [
-            Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [Text('Current Vitals', style: AppTextStyles.h4.copyWith(color: Colors.white)), Icon(PhosphorIcons.heartbeat(), color: Colors.white, size: 32)]),
+            Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [Text('Current Vitals', style: AppTextStyles.h4.copyWith(color: Colors.white)), Icon(Icons.favorite_border, color: Colors.white, size: 32)]),
             const SizedBox(height: 20),
             Row(children: [
               Expanded(child: _buildVital('BP', '${vitals['bpSystolic']}/${vitals['bpDiastolic']}', 'mmHg')),
@@ -596,9 +595,9 @@ class HealthScreen extends ConsumerWidget {
         Container(
           padding: const EdgeInsets.all(20),
           decoration: BoxDecoration(
-            gradient: LinearGradient(colors: [AppColors.warning.withOpacity(0.3), AppColors.backgroundCard]),
+            gradient: LinearGradient(colors: [AppColors.warning.withValues(alpha: 0.3), AppColors.backgroundCard]),
             borderRadius: BorderRadius.circular(20),
-            border: Border.all(color: AppColors.warning.withOpacity(0.5)),
+            border: Border.all(color: AppColors.warning.withValues(alpha: 0.5)),
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -607,7 +606,7 @@ class HealthScreen extends ConsumerWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text('Diabetic Monitoring', style: AppTextStyles.h4.copyWith(color: AppColors.warning)),
-                  Icon(PhosphorIcons.drop(), color: AppColors.warning, size: 28),
+                  Icon(Icons.water_drop, color: AppColors.warning, size: 28),
                 ],
               ),
               const SizedBox(height: 16),
@@ -624,11 +623,11 @@ class HealthScreen extends ConsumerWidget {
                     Container(
                       padding: const EdgeInsets.all(12),
                       decoration: BoxDecoration(
-                        color: vitals['bloodSugar'] < 140 ? AppColors.success.withOpacity(0.2) : AppColors.error.withOpacity(0.2),
+                        color: vitals['bloodSugar'] < 140 ? AppColors.success.withValues(alpha: 0.2) : AppColors.error.withValues(alpha: 0.2),
                         borderRadius: BorderRadius.circular(12),
                       ),
                       child: Icon(
-                        PhosphorIcons.drop(),
+                        Icons.water_drop,
                         color: vitals['bloodSugar'] < 140 ? AppColors.success : AppColors.error,
                         size: 24,
                       ),
@@ -741,7 +740,7 @@ class HealthScreen extends ConsumerWidget {
                 ),
                 child: Row(
                   children: [
-                    Icon(PhosphorIcons.syringe(), color: AppColors.electricPurple, size: 20),
+                    Icon(Icons.vaccines, color: AppColors.electricPurple, size: 20),
                     const SizedBox(width: 12),
                     Expanded(
                       child: Column(
@@ -763,10 +762,10 @@ class HealthScreen extends ConsumerWidget {
                 spacing: 8,
                 runSpacing: 8,
                 children: [
-                  _buildDiabeticChip('Log Glucose', PhosphorIcons.drop(), () {}),
-                  _buildDiabeticChip('Log Insulin', PhosphorIcons.syringe(), () {}),
-                  _buildDiabeticChip('Log Carbs', PhosphorIcons.forkKnife(), () {}),
-                  _buildDiabeticChip('A1C Test', PhosphorIcons.chartLine(), () {}),
+                  _buildDiabeticChip('Log Glucose', Icons.water_drop, () {}),
+                  _buildDiabeticChip('Log Insulin', Icons.vaccines, () {}),
+                  _buildDiabeticChip('Log Carbs', Icons.restaurant, () {}),
+                  _buildDiabeticChip('A1C Test', Icons.show_chart, () {}),
                 ],
               ),
             ],
@@ -781,7 +780,7 @@ class HealthScreen extends ConsumerWidget {
           margin: const EdgeInsets.only(bottom: 8), padding: const EdgeInsets.all(12),
           decoration: BoxDecoration(color: AppColors.backgroundCard, borderRadius: BorderRadius.circular(12)),
           child: Row(children: [
-            Container(padding: const EdgeInsets.all(10), decoration: BoxDecoration(color: AppColors.assurancePrimary.withOpacity(0.2), borderRadius: BorderRadius.circular(10)), child: Icon(PhosphorIcons.pill(), color: AppColors.assurancePrimary)),
+            Container(padding: const EdgeInsets.all(10), decoration: BoxDecoration(color: AppColors.assurancePrimary.withValues(alpha: 0.2), borderRadius: BorderRadius.circular(10)), child: Icon(Icons.medication, color: AppColors.assurancePrimary)),
             const SizedBox(width: 12),
             Expanded(child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [Text(m['name'], style: AppTextStyles.bodyMedium), Text('${m['dosage']} • ${m['frequency']}', style: AppTextStyles.caption)])),
             Text(m['times'].join(', '), style: AppTextStyles.caption.copyWith(color: AppColors.textMuted)),
@@ -796,7 +795,7 @@ class HealthScreen extends ConsumerWidget {
           margin: const EdgeInsets.only(bottom: 8), padding: const EdgeInsets.all(12),
           decoration: BoxDecoration(color: AppColors.backgroundCard, borderRadius: BorderRadius.circular(12)),
           child: Row(children: [
-            Container(padding: const EdgeInsets.all(10), decoration: BoxDecoration(color: AppColors.cyan.withOpacity(0.2), borderRadius: BorderRadius.circular(10)), child: Icon(PhosphorIcons.calendar(), color: AppColors.cyan)),
+            Container(padding: const EdgeInsets.all(10), decoration: BoxDecoration(color: AppColors.cyan.withValues(alpha: 0.2), borderRadius: BorderRadius.circular(10)), child: Icon(Icons.calendar_today, color: AppColors.cyan)),
             const SizedBox(width: 12),
             Expanded(child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [Text(a['doctor'], style: AppTextStyles.bodyMedium), Text('${a['specialty']} • ${a['date']}', style: AppTextStyles.caption)])),
           ]),
@@ -810,10 +809,10 @@ class HealthScreen extends ConsumerWidget {
           margin: const EdgeInsets.only(bottom: 8), padding: const EdgeInsets.all(12),
           decoration: BoxDecoration(color: AppColors.backgroundCard, borderRadius: BorderRadius.circular(12)),
           child: Row(children: [
-            Container(padding: const EdgeInsets.all(10), decoration: BoxDecoration(color: AppColors.neonPink.withOpacity(0.2), borderRadius: BorderRadius.circular(10)), child: Icon(PhosphorIcons.user(), color: AppColors.neonPink)),
+            Container(padding: const EdgeInsets.all(10), decoration: BoxDecoration(color: AppColors.neonPink.withValues(alpha: 0.2), borderRadius: BorderRadius.circular(10)), child: Icon(Icons.person, color: AppColors.neonPink)),
             const SizedBox(width: 12),
             Expanded(child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [Text(d['name'], style: AppTextStyles.bodyMedium), Text(d['specialty'], style: AppTextStyles.caption)])),
-            IconButton(onPressed: () {}, icon: Icon(PhosphorIcons.phone(), color: AppColors.success)),
+            IconButton(onPressed: () {}, icon: Icon(Icons.phone, color: AppColors.success)),
           ]),
         )),
         const SizedBox(height: 24),
@@ -825,7 +824,7 @@ class HealthScreen extends ConsumerWidget {
           padding: const EdgeInsets.all(16),
           decoration: BoxDecoration(color: AppColors.backgroundCard, borderRadius: BorderRadius.circular(12)),
           child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-            Row(children: [Icon(PhosphorIcons.shield(), color: AppColors.success), const SizedBox(width: 12), Expanded(child: Text(insurance['provider'], style: AppTextStyles.bodyLarge))]),
+            Row(children: [Icon(Icons.shield, color: AppColors.success), const SizedBox(width: 12), Expanded(child: Text(insurance['provider'], style: AppTextStyles.bodyLarge))]),
             const SizedBox(height: 8),
             Text('Policy: ${insurance['policyNumber']}', style: AppTextStyles.bodyMedium),
             Text('Group: ${insurance['groupNumber']}', style: AppTextStyles.caption),
@@ -838,12 +837,12 @@ class HealthScreen extends ConsumerWidget {
         const SizedBox(height: 12),
         ...emergencyContacts.map((e) => Container(
           margin: const EdgeInsets.only(bottom: 8), padding: const EdgeInsets.all(12),
-          decoration: BoxDecoration(color: AppColors.backgroundCard, borderRadius: BorderRadius.circular(12), border: Border.all(color: AppColors.error.withOpacity(0.3))),
+          decoration: BoxDecoration(color: AppColors.backgroundCard, borderRadius: BorderRadius.circular(12), border: Border.all(color: AppColors.error.withValues(alpha: 0.3))),
           child: Row(children: [
-            Container(padding: const EdgeInsets.all(10), decoration: BoxDecoration(color: AppColors.error.withOpacity(0.2), borderRadius: BorderRadius.circular(10)), child: Icon(PhosphorIcons.warning(), color: AppColors.error)),
+            Container(padding: const EdgeInsets.all(10), decoration: BoxDecoration(color: AppColors.error.withValues(alpha: 0.2), borderRadius: BorderRadius.circular(10)), child: Icon(Icons.warning, color: AppColors.error)),
             const SizedBox(width: 12),
             Expanded(child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [Text(e['name'], style: AppTextStyles.bodyMedium), Text(e['relationship'], style: AppTextStyles.caption)])),
-            IconButton(onPressed: () {}, icon: Icon(PhosphorIcons.phone(), color: AppColors.success)),
+            IconButton(onPressed: () {}, icon: Icon(Icons.phone, color: AppColors.success)),
           ]),
         )),
         const SizedBox(height: 24),
@@ -852,10 +851,10 @@ class HealthScreen extends ConsumerWidget {
         Text('Quick Actions', style: AppTextStyles.h4),
         const SizedBox(height: 12),
         Wrap(spacing: 12, runSpacing: 12, children: [
-          _buildActionChip('Log Vitals', PhosphorIcons.gauge(), AppColors.assurancePrimary, () {}),
-          _buildActionChip('Add Medication', PhosphorIcons.pill(), AppColors.warning, () {}),
-          _buildActionChip('Schedule Appt', PhosphorIcons.calendar(), AppColors.cyan, () {}),
-          _buildActionChip('Log Symptom', PhosphorIcons.pulse(), AppColors.error, () {}),
+          _buildActionChip('Log Vitals', Icons.speed, AppColors.assurancePrimary, () {}),
+          _buildActionChip('Add Medication', Icons.medication, AppColors.warning, () {}),
+          _buildActionChip('Schedule Appt', Icons.calendar_today, AppColors.cyan, () {}),
+          _buildActionChip('Log Symptom', Icons.monitor_heart, AppColors.error, () {}),
         ]),
       ]),
     ))]));
@@ -871,9 +870,9 @@ class HealthScreen extends ConsumerWidget {
     child: Container(
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
       decoration: BoxDecoration(
-        color: AppColors.warning.withOpacity(0.2),
+        color: AppColors.warning.withValues(alpha: 0.2),
         borderRadius: BorderRadius.circular(20),
-        border: Border.all(color: AppColors.warning.withOpacity(0.5)),
+        border: Border.all(color: AppColors.warning.withValues(alpha: 0.5)),
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
@@ -888,7 +887,7 @@ class HealthScreen extends ConsumerWidget {
   
   Widget _buildActionChip(String label, IconData icon, Color color, VoidCallback onTap) => GestureDetector(
     onTap: onTap,
-    child: Container(padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12), decoration: BoxDecoration(color: AppColors.backgroundCard, borderRadius: BorderRadius.circular(12), border: Border.all(color: color.withOpacity(0.3))), child: Row(mainAxisSize: MainAxisSize.min, children: [Icon(icon, color: color, size: 20), const SizedBox(width: 8), Text(label, style: AppTextStyles.bodyMedium)])),
+    child: Container(padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12), decoration: BoxDecoration(color: AppColors.backgroundCard, borderRadius: BorderRadius.circular(12), border: Border.all(color: color.withValues(alpha: 0.3))), child: Row(mainAxisSize: MainAxisSize.min, children: [Icon(icon, color: color, size: 20), const SizedBox(width: 8), Text(label, style: AppTextStyles.bodyMedium)])),
   );
 }
 
@@ -920,7 +919,7 @@ class _MentalScreenState extends ConsumerState<MentalScreen> {
         // Daily Check-in
         Container(
           padding: const EdgeInsets.all(24),
-          decoration: BoxDecoration(gradient: LinearGradient(colors: [AppColors.neonPink.withOpacity(0.6), AppColors.electricPurple.withOpacity(0.6)]), borderRadius: BorderRadius.circular(20)),
+          decoration: BoxDecoration(gradient: LinearGradient(colors: [AppColors.neonPink.withValues(alpha: 0.6), AppColors.electricPurple.withValues(alpha: 0.6)]), borderRadius: BorderRadius.circular(20)),
           child: Column(children: [
             Text('Daily Check-in', style: AppTextStyles.h4.copyWith(color: Colors.white)),
             const SizedBox(height: 16),
@@ -937,15 +936,15 @@ class _MentalScreenState extends ConsumerState<MentalScreen> {
         const SizedBox(height: 12),
         Wrap(spacing: 12, runSpacing: 12, children: [
           _buildPractice('Meditation', Icons.self_improvement, AppColors.cyan),
-          _buildPractice('Gratitude', PhosphorIcons.heart(), AppColors.neonPink),
-          _buildPractice('Journal', PhosphorIcons.notebook(), AppColors.electricPurple),
+          _buildPractice('Gratitude', Icons.favorite, AppColors.neonPink),
+          _buildPractice('Journal', Icons.note, AppColors.electricPurple),
           _buildPractice('Prayer', Icons.church, AppColors.gold),
-          _buildPractice('Breathing', PhosphorIcons.wind(), AppColors.success),
+          _buildPractice('Breathing', Icons.air, AppColors.success),
         ]),
         const SizedBox(height: 24),
         
         // Gratitude List
-        if (gratitude.isNotEmpty) ...[Text('Gratitude List', style: AppTextStyles.h4), const SizedBox(height: 12), ...gratitude.take(5).map((g) => Container(margin: const EdgeInsets.only(bottom: 8), padding: const EdgeInsets.all(12), decoration: BoxDecoration(color: AppColors.backgroundCard, borderRadius: BorderRadius.circular(12)), child: Row(children: [Icon(PhosphorIcons.heart(), color: AppColors.neonPink, size: 18), const SizedBox(width: 12), Expanded(child: Text(g, style: AppTextStyles.bodyMedium))])))]
+        if (gratitude.isNotEmpty) ...[Text('Gratitude List', style: AppTextStyles.h4), const SizedBox(height: 12), ...gratitude.take(5).map((g) => Container(margin: const EdgeInsets.only(bottom: 8), padding: const EdgeInsets.all(12), decoration: BoxDecoration(color: AppColors.backgroundCard, borderRadius: BorderRadius.circular(12)), child: Row(children: [Icon(Icons.favorite, color: AppColors.neonPink, size: 18), const SizedBox(width: 12), Expanded(child: Text(g, style: AppTextStyles.bodyMedium))])))]
       ]),
     ))]));
   }
@@ -957,6 +956,6 @@ class _MentalScreenState extends ConsumerState<MentalScreen> {
   
   Widget _buildPractice(String label, IconData icon, Color color) => GestureDetector(
     onTap: () {},
-    child: Container(padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12), decoration: BoxDecoration(color: AppColors.backgroundCard, borderRadius: BorderRadius.circular(12), border: Border.all(color: color.withOpacity(0.3))), child: Row(mainAxisSize: MainAxisSize.min, children: [Icon(icon, color: color, size: 20), const SizedBox(width: 8), Text(label, style: AppTextStyles.bodyMedium)])),
+    child: Container(padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12), decoration: BoxDecoration(color: AppColors.backgroundCard, borderRadius: BorderRadius.circular(12), border: Border.all(color: color.withValues(alpha: 0.3))), child: Row(mainAxisSize: MainAxisSize.min, children: [Icon(icon, color: color, size: 20), const SizedBox(width: 8), Text(label, style: AppTextStyles.bodyMedium)])),
   );
 }

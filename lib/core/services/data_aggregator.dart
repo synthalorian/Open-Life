@@ -133,7 +133,7 @@ class DataAggregator {
     if (savingsRate > 0.30 && steps > stepsGoal * 0.8) {
       insights.add(CrossPillarInsight(
         title: 'Excellent Balance! 🌟',
-        description: 'You\'re crushing it! ${(savingsRate * 100).toInt()}% savings rate and ${steps} steps today. You\'re optimizing both wealth and health.',
+        description: 'You\'re crushing it! ${(savingsRate * 100).toInt()}% savings rate and $steps steps today. You\'re optimizing both wealth and health.',
         pillars: [InsightPillar.fitness, InsightPillar.finance, InsightPillar.health],
         severity: InsightSeverity.positive,
         actionable: false,

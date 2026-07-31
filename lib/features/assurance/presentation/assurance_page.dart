@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_animate/flutter_animate.dart';
-import 'package:phosphor_flutter/phosphor_flutter.dart';
 
 import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_text_styles.dart';
@@ -51,7 +50,7 @@ class _AssurancePageState extends ConsumerState<AssurancePage> with SingleTicker
                     begin: Alignment.topCenter,
                     end: Alignment.bottomCenter,
                     colors: [
-                      AppColors.assurancePrimary.withOpacity(0.3),
+                      AppColors.assurancePrimary.withValues(alpha: 0.3),
                       AppColors.backgroundDarker,
                     ],
                   ),
@@ -88,10 +87,10 @@ class _AssurancePageState extends ConsumerState<AssurancePage> with SingleTicker
               labelColor: AppColors.assurancePrimary,
               unselectedLabelColor: AppColors.textMuted,
               tabs: [
-                Tab(icon: Icon(PhosphorIcons.houseLine())),
-                Tab(icon: Icon(PhosphorIcons.shieldCheck())),
-                Tab(icon: Icon(PhosphorIcons.pill())),
-                Tab(icon: Icon(PhosphorIcons.sparkle())),
+                Tab(icon: Icon(Icons.home_outlined)),
+                Tab(icon: Icon(Icons.verified_user)),
+                Tab(icon: Icon(Icons.medication)),
+                Tab(icon: Icon(Icons.auto_awesome)),
               ],
             ),
           ),
@@ -121,7 +120,7 @@ class _AssurancePageState extends ConsumerState<AssurancePage> with SingleTicker
               Expanded(
                 child: _buildQuickActionCard(
                   'Find Doctor',
-                  PhosphorIcons.magnifyingGlass(),
+                  Icons.search,
                   AppColors.assurancePrimary,
                 ),
               ),
@@ -129,7 +128,7 @@ class _AssurancePageState extends ConsumerState<AssurancePage> with SingleTicker
               Expanded(
                 child: _buildQuickActionCard(
                   'Book Appointment',
-                  PhosphorIcons.calendarPlus(),
+                  Icons.event,
                   AppColors.electricPurple,
                 ),
               ),
@@ -141,7 +140,7 @@ class _AssurancePageState extends ConsumerState<AssurancePage> with SingleTicker
               Expanded(
                 child: _buildQuickActionCard(
                   'View Coverage',
-                  PhosphorIcons.shieldCheck(),
+                  Icons.verified_user,
                   AppColors.financePrimary,
                 ),
               ),
@@ -149,7 +148,7 @@ class _AssurancePageState extends ConsumerState<AssurancePage> with SingleTicker
               Expanded(
                 child: _buildQuickActionCard(
                   'Emergency',
-                  PhosphorIcons.firstAid(),
+                  Icons.medical_services,
                   AppColors.error,
                 ),
               ),
@@ -175,7 +174,7 @@ class _AssurancePageState extends ConsumerState<AssurancePage> with SingleTicker
                   title: 'Blood Pressure',
                   value: '${state.currentData?.bloodPressureSystolic ?? '--'}/${state.currentData?.bloodPressureDiastolic ?? '--'}',
                   subtitle: 'mmHg',
-                  icon: PhosphorIcons.heartbeat(),
+                  icon: Icons.favorite_border,
                   color: AppColors.error,
                 ),
               ),
@@ -183,9 +182,9 @@ class _AssurancePageState extends ConsumerState<AssurancePage> with SingleTicker
               Expanded(
                 child: NeonStatCard(
                   title: 'Weight',
-                  value: '${state.weight?.toStringAsFixed(1) ?? 'N/A'}',
+                  value: state.weight?.toStringAsFixed(1) ?? 'N/A',
                   subtitle: 'lbs',
-                  icon: PhosphorIcons.scales(),
+                  icon: Icons.balance,
                   color: AppColors.assurancePrimary,
                 ),
               ),
@@ -214,7 +213,7 @@ class _AssurancePageState extends ConsumerState<AssurancePage> with SingleTicker
           const SizedBox(height: 24),
           GradientButton(
             text: 'Add Policy',
-            icon: PhosphorIcons.plus(),
+            icon: Icons.add,
             gradient: AppColors.assuranceGradient,
           ),
         ],
@@ -236,13 +235,13 @@ class _AssurancePageState extends ConsumerState<AssurancePage> with SingleTicker
           const SizedBox(height: 24),
           Text('Medical Documents', style: AppTextStyles.h4),
           const SizedBox(height: 16),
-          _buildDocumentCard('Lab Results - Jan 2026', PhosphorIcons.fileText()),
-          _buildDocumentCard('Annual Physical', PhosphorIcons.firstAid()),
-          _buildDocumentCard('Vaccination Records', PhosphorIcons.syringe()),
+          _buildDocumentCard('Lab Results - Jan 2026', Icons.description),
+          _buildDocumentCard('Annual Physical', Icons.medical_services),
+          _buildDocumentCard('Vaccination Records', Icons.vaccines),
           const SizedBox(height: 24),
           GradientButton(
             text: 'Upload Document',
-            icon: PhosphorIcons.uploadSimple(),
+            icon: Icons.upload,
             gradient: AppColors.assuranceGradient,
           ),
         ],
@@ -259,19 +258,19 @@ class _AssurancePageState extends ConsumerState<AssurancePage> with SingleTicker
           NeonCard(
             gradient: LinearGradient(
               colors: [
-                AppColors.assurancePrimary.withOpacity(0.2),
-                AppColors.cyan.withOpacity(0.2),
+                AppColors.assurancePrimary.withValues(alpha: 0.2),
+                AppColors.cyan.withValues(alpha: 0.2),
               ],
             ),
             child: Column(
               children: [
                 Container(
                   padding: const EdgeInsets.all(16),
-                  decoration: BoxDecoration(
+                  decoration: const BoxDecoration(
                     gradient: AppColors.assuranceGradient,
                     shape: BoxShape.circle,
                   ),
-                  child: Icon(PhosphorIcons.brain(), size: 32, color: Colors.white),
+                  child: Icon(Icons.psychology, size: 32, color: Colors.white),
                 ),
                 const SizedBox(height: 16),
                 Text('AI Health Assistant', style: AppTextStyles.h3),
@@ -284,7 +283,7 @@ class _AssurancePageState extends ConsumerState<AssurancePage> with SingleTicker
                 const SizedBox(height: 24),
                 GradientButton(
                   text: 'Start Chat',
-                  icon: PhosphorIcons.chatCircle(),
+                  icon: Icons.chat_bubble_outline,
                   gradient: AppColors.assuranceGradient,
                 ),
               ],
@@ -312,7 +311,7 @@ class _AssurancePageState extends ConsumerState<AssurancePage> with SingleTicker
             Container(
               padding: const EdgeInsets.all(12),
               decoration: BoxDecoration(
-                color: color.withOpacity(0.2),
+                color: color.withValues(alpha: 0.2),
                 borderRadius: BorderRadius.circular(12),
               ),
               child: Icon(icon, color: color, size: 24),
@@ -334,10 +333,10 @@ class _AssurancePageState extends ConsumerState<AssurancePage> with SingleTicker
           Container(
             padding: const EdgeInsets.all(12),
             decoration: BoxDecoration(
-              color: AppColors.assurancePrimary.withOpacity(0.2),
+              color: AppColors.assurancePrimary.withValues(alpha: 0.2),
               borderRadius: BorderRadius.circular(12),
             ),
-            child: Icon(PhosphorIcons.calendarCheck(), color: AppColors.assurancePrimary),
+            child: Icon(Icons.event_available, color: AppColors.assurancePrimary),
           ),
           const SizedBox(width: 16),
           Expanded(
@@ -354,9 +353,9 @@ class _AssurancePageState extends ConsumerState<AssurancePage> with SingleTicker
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
             decoration: BoxDecoration(
-              color: AppColors.assurancePrimary.withOpacity(0.2),
+              color: AppColors.assurancePrimary.withValues(alpha: 0.2),
               borderRadius: BorderRadius.circular(20),
-              border: Border.all(color: AppColors.assurancePrimary.withOpacity(0.5)),
+              border: Border.all(color: AppColors.assurancePrimary.withValues(alpha: 0.5)),
             ),
             child: Text(
               apt.daysUntil == 0 ? 'Today' : 'In ${apt.daysUntil} days',
@@ -380,7 +379,7 @@ class _AssurancePageState extends ConsumerState<AssurancePage> with SingleTicker
               Container(
                 padding: const EdgeInsets.all(10),
                 decoration: BoxDecoration(
-                  color: policy.color.withOpacity(0.2),
+                  color: policy.color.withValues(alpha: 0.2),
                   borderRadius: BorderRadius.circular(10),
                 ),
                 child: Icon(policy.icon, color: policy.color, size: 20),
@@ -398,7 +397,7 @@ class _AssurancePageState extends ConsumerState<AssurancePage> with SingleTicker
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
                 decoration: BoxDecoration(
-                  color: AppColors.success.withOpacity(0.2),
+                  color: AppColors.success.withValues(alpha: 0.2),
                   borderRadius: BorderRadius.circular(20),
                 ),
                 child: Text('Active', style: AppTextStyles.caption.copyWith(color: AppColors.success)),
@@ -451,10 +450,10 @@ class _AssurancePageState extends ConsumerState<AssurancePage> with SingleTicker
           Container(
             padding: const EdgeInsets.all(10),
             decoration: BoxDecoration(
-              color: AppColors.cyan.withOpacity(0.2),
+              color: AppColors.cyan.withValues(alpha: 0.2),
               borderRadius: BorderRadius.circular(10),
             ),
-            child: Icon(PhosphorIcons.pill(), color: AppColors.cyan, size: 20),
+            child: Icon(Icons.medication, color: AppColors.cyan, size: 20),
           ),
           const SizedBox(width: 12),
           Expanded(
@@ -469,7 +468,7 @@ class _AssurancePageState extends ConsumerState<AssurancePage> with SingleTicker
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
             decoration: BoxDecoration(
-              color: med.refillsRemaining > 0 ? AppColors.success.withOpacity(0.2) : AppColors.warning.withOpacity(0.2),
+              color: med.refillsRemaining > 0 ? AppColors.success.withValues(alpha: 0.2) : AppColors.warning.withValues(alpha: 0.2),
               borderRadius: BorderRadius.circular(20),
             ),
             child: Text(
@@ -493,7 +492,7 @@ class _AssurancePageState extends ConsumerState<AssurancePage> with SingleTicker
           Icon(icon, color: AppColors.textMuted),
           const SizedBox(width: 12),
           Expanded(child: Text(title, style: AppTextStyles.bodyMedium)),
-          Icon(PhosphorIcons.arrowRight(), color: AppColors.textMuted, size: 20),
+          Icon(Icons.arrow_forward, color: AppColors.textMuted, size: 20),
         ],
       ),
     );
@@ -503,8 +502,8 @@ class _AssurancePageState extends ConsumerState<AssurancePage> with SingleTicker
     return NeonCard(
       gradient: LinearGradient(
         colors: [
-          AppColors.assurancePrimary.withOpacity(0.2),
-          AppColors.cyan.withOpacity(0.2),
+          AppColors.assurancePrimary.withValues(alpha: 0.2),
+          AppColors.cyan.withValues(alpha: 0.2),
         ],
       ),
       child: Row(
@@ -512,10 +511,10 @@ class _AssurancePageState extends ConsumerState<AssurancePage> with SingleTicker
           Container(
             padding: const EdgeInsets.all(12),
             decoration: BoxDecoration(
-              color: AppColors.assurancePrimary.withOpacity(0.2),
+              color: AppColors.assurancePrimary.withValues(alpha: 0.2),
               borderRadius: BorderRadius.circular(12),
             ),
-            child: Icon(PhosphorIcons.sparkle(), color: AppColors.assurancePrimary),
+            child: Icon(Icons.auto_awesome, color: AppColors.assurancePrimary),
           ),
           const SizedBox(width: 16),
           Expanded(
@@ -541,7 +540,7 @@ class _AssurancePageState extends ConsumerState<AssurancePage> with SingleTicker
         child: Row(
           children: [
             Expanded(child: Text(question, style: AppTextStyles.bodyMedium)),
-            Icon(PhosphorIcons.caretRight(), color: AppColors.textMuted, size: 20),
+            Icon(Icons.chevron_right, color: AppColors.textMuted, size: 20),
           ],
         ),
       ),

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:phosphor_flutter/phosphor_flutter.dart';
 import '../../core/theme/app_colors.dart';
 
 
@@ -19,38 +18,38 @@ class _SynthwaveShellState extends ConsumerState<SynthwaveShell> {
 
   final List<_NavItem> _navItems = [
     _NavItem(
-      icon: PhosphorIcons.house(),
-      activeIcon: PhosphorIconsFill.house,
+      icon: Icons.home,
+      activeIcon: Icons.home,
       label: 'Home',
       path: '/dashboard',
     ),
     _NavItem(
-      icon: PhosphorIcons.barbell(),
-      activeIcon: PhosphorIconsFill.barbell,
+      icon: Icons.fitness_center,
+      activeIcon: Icons.fitness_center,
       label: 'Fitness',
       path: '/fitness',
     ),
     _NavItem(
-      icon: PhosphorIcons.wallet(),
-      activeIcon: PhosphorIconsFill.wallet,
+      icon: Icons.account_balance_wallet,
+      activeIcon: Icons.account_balance_wallet,
       label: 'Finance',
       path: '/finance',
     ),
     _NavItem(
-      icon: PhosphorIcons.heart(),
-      activeIcon: PhosphorIconsFill.heart,
+      icon: Icons.favorite,
+      activeIcon: Icons.favorite,
       label: 'Health',
       path: '/assurance',
     ),
     _NavItem(
-      icon: PhosphorIcons.sparkle(),
-      activeIcon: PhosphorIconsFill.sparkle,
+      icon: Icons.auto_awesome,
+      activeIcon: Icons.auto_awesome,
       label: 'AI',
       path: '/ai',
     ),
     _NavItem(
-      icon: PhosphorIcons.gearSix(),
-      activeIcon: PhosphorIconsFill.gearSix,
+      icon: Icons.settings,
+      activeIcon: Icons.settings,
       label: 'Settings',
       path: '/settings',
     ),
@@ -128,7 +127,7 @@ class _SynthwaveShellState extends ConsumerState<SynthwaveShell> {
                   boxShadow: isSelected
                       ? [
                           BoxShadow(
-                            color: AppColors.neonPink.withOpacity(0.5),
+                            color: AppColors.neonPink.withValues(alpha: 0.5),
                             blurRadius: 12,
                             spreadRadius: 2,
                           ),

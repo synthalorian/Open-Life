@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:phosphor_flutter/phosphor_flutter.dart';
 
 import '../../../core/theme/app_colors.dart';
 import '../../fitness/providers/fitness_provider.dart';
@@ -118,8 +117,8 @@ class AIChatNotifier extends StateNotifier<AIChatState> {
 
 **Recommendation:** ${fitness.aiInsight ?? 'Keep tracking your health!'}''',
         context: [
-          MessageContext(label: 'Fitness', icon: PhosphorIcons.barbell(), color: AppColors.fitnessPrimary),
-          MessageContext(label: 'Health', icon: PhosphorIcons.heart(), color: AppColors.assurancePrimary),
+          MessageContext(label: 'Fitness', icon: Icons.fitness_center, color: AppColors.fitnessPrimary),
+          MessageContext(label: 'Health', icon: Icons.favorite, color: AppColors.assurancePrimary),
         ],
       );
     }
@@ -142,7 +141,7 @@ ${topCategory != null ? '**Top Spending:** ${topCategory.key} at \$${topCategory
 
 **Insight:** ${finance.aiInsight ?? 'Track more transactions to get personalized insights!'}''',
         context: [
-          MessageContext(label: 'Finance', icon: PhosphorIcons.wallet(), color: AppColors.financePrimary),
+          MessageContext(label: 'Finance', icon: Icons.account_balance_wallet, color: AppColors.financePrimary),
         ],
       );
     }
@@ -166,7 +165,7 @@ ${topCategory != null ? '**Top Spending:** ${topCategory.key} at \$${topCategory
 
 **Tip:** ${fitness.aiInsight ?? 'Consistency is key!'}''',
         context: [
-          MessageContext(label: 'Fitness', icon: PhosphorIcons.barbell(), color: AppColors.fitnessPrimary),
+          MessageContext(label: 'Fitness', icon: Icons.fitness_center, color: AppColors.fitnessPrimary),
         ],
       );
     }
@@ -196,15 +195,15 @@ ${topCategory != null ? '**Top Spending:** ${topCategory.key} at \$${topCategory
 
 **AI Recommendation:** You're doing great! Keep tracking your data for more personalized insights.''',
         context: [
-          MessageContext(label: 'Fitness', icon: PhosphorIcons.barbell(), color: AppColors.fitnessPrimary),
-          MessageContext(label: 'Finance', icon: PhosphorIcons.wallet(), color: AppColors.financePrimary),
-          MessageContext(label: 'Health', icon: PhosphorIcons.heart(), color: AppColors.assurancePrimary),
+          MessageContext(label: 'Fitness', icon: Icons.fitness_center, color: AppColors.fitnessPrimary),
+          MessageContext(label: 'Finance', icon: Icons.account_balance_wallet, color: AppColors.financePrimary),
+          MessageContext(label: 'Health', icon: Icons.favorite, color: AppColors.assurancePrimary),
         ],
       );
     }
 
     // Default response
-    return _AIResponse(
+    return const _AIResponse(
       text: '''I can help you with:
 
 • **Fitness** - Workouts, nutrition, activity tracking
