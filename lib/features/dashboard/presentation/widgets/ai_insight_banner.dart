@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:phosphor_flutter/phosphor_flutter.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_text_styles.dart';
 import '../../../../shared/widgets/neon_card.dart';
@@ -32,8 +31,8 @@ class AIInsightBanner extends ConsumerWidget {
     return NeonCard(
       gradient: LinearGradient(
         colors: [
-          color.withOpacity(0.2),
-          AppColors.electricPurple.withOpacity(0.2),
+          color.withValues(alpha: 0.2),
+          AppColors.electricPurple.withValues(alpha: 0.2),
         ],
       ),
       glowColor: color,
@@ -46,7 +45,7 @@ class AIInsightBanner extends ConsumerWidget {
               gradient: AppColors.neonGlowGradient,
               borderRadius: BorderRadius.circular(12),
             ),
-            child: Icon(PhosphorIcons.sparkle(), color: Colors.white),
+            child: Icon(Icons.auto_awesome, color: Colors.white),
           ),
           const SizedBox(width: 16),
           Expanded(
@@ -65,7 +64,7 @@ class AIInsightBanner extends ConsumerWidget {
                       padding: const EdgeInsets.only(left: 4),
                       child: Icon(
                         _getPillarIcon(p),
-                        color: color.withOpacity(0.5),
+                        color: color.withValues(alpha: 0.5),
                         size: 14,
                       ),
                     )),
@@ -81,9 +80,9 @@ class AIInsightBanner extends ConsumerWidget {
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
               decoration: BoxDecoration(
-                color: color.withOpacity(0.2),
+                color: color.withValues(alpha: 0.2),
                 borderRadius: BorderRadius.circular(20),
-                border: Border.all(color: color.withOpacity(0.5)),
+                border: Border.all(color: color.withValues(alpha: 0.5)),
               ),
               child: Text(
                 insight.action!,
@@ -103,7 +102,7 @@ class AIInsightBanner extends ConsumerWidget {
           Container(
             padding: const EdgeInsets.all(12),
             decoration: BoxDecoration(
-              color: AppColors.electricPurple.withOpacity(0.2),
+              color: AppColors.electricPurple.withValues(alpha: 0.2),
               borderRadius: BorderRadius.circular(12),
             ),
             child: const SizedBox(
@@ -143,11 +142,11 @@ class AIInsightBanner extends ConsumerWidget {
   IconData _getPillarIcon(InsightPillar pillar) {
     switch (pillar) {
       case InsightPillar.fitness:
-        return PhosphorIcons.barbell();
+        return Icons.fitness_center;
       case InsightPillar.finance:
-        return PhosphorIcons.wallet();
+        return Icons.account_balance_wallet;
       case InsightPillar.health:
-        return PhosphorIcons.heart();
+        return Icons.favorite;
     }
   }
 }
@@ -163,16 +162,16 @@ class MiniAIInsight extends StatelessWidget {
     required this.text,
     IconData? icon,
     this.color = AppColors.cyan,
-  }) : icon = icon ?? PhosphorIcons.sparkle();
+  }) : icon = icon ?? Icons.auto_awesome;
 
   @override
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
-        color: color.withOpacity(0.1),
+        color: color.withValues(alpha: 0.1),
         borderRadius: BorderRadius.circular(10),
-        border: Border.all(color: color.withOpacity(0.3)),
+        border: Border.all(color: color.withValues(alpha: 0.3)),
       ),
       child: Row(
         children: [

@@ -44,7 +44,7 @@ class SynthwaveTheme {
         backgroundColor: AppColors.neonPink,
         foregroundColor: AppColors.textPrimary,
         elevation: 8,
-        shadowColor: AppColors.neonPink.withOpacity(0.5),
+        shadowColor: AppColors.neonPink.withValues(alpha: 0.5),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(12),
         ),
@@ -110,7 +110,7 @@ class SynthwaveTheme {
     ),
     navigationBarTheme: NavigationBarThemeData(
       backgroundColor: AppColors.backgroundDarker,
-      indicatorColor: AppColors.neonPink.withOpacity(0.3),
+      indicatorColor: AppColors.neonPink.withValues(alpha: 0.3),
       labelTextStyle: WidgetStateProperty.resolveWith((states) {
         if (states.contains(WidgetState.selected)) {
           return AppTextStyles.label.copyWith(color: AppColors.neonPink);
@@ -146,7 +146,7 @@ class SynthwaveTheme {
       activeTrackColor: AppColors.neonPink,
       inactiveTrackColor: AppColors.backgroundCardLight,
       thumbColor: AppColors.neonPinkLight,
-      overlayColor: AppColors.neonPink.withOpacity(0.2),
+      overlayColor: AppColors.neonPink.withValues(alpha: 0.2),
       valueIndicatorColor: AppColors.neonPink,
       valueIndicatorTextStyle: AppTextStyles.bodySmall,
     ),
@@ -159,7 +159,7 @@ class SynthwaveTheme {
       }),
       trackColor: WidgetStateProperty.resolveWith((states) {
         if (states.contains(WidgetState.selected)) {
-          return AppColors.neonPink.withOpacity(0.5);
+          return AppColors.neonPink.withValues(alpha: 0.5);
         }
         return AppColors.backgroundCardLight;
       }),
