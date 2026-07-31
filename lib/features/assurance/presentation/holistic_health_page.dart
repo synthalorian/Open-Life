@@ -198,17 +198,17 @@ class WellnessScoreCard extends StatelessWidget {
         decoration: BoxDecoration(
           gradient: LinearGradient(
             colors: [
-              color.withOpacity(0.3),
+              color.withValues(alpha: 0.3),
               AppColors.backgroundCard,
             ],
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
           ),
           borderRadius: BorderRadius.circular(20),
-          border: Border.all(color: color.withOpacity(0.5)),
+          border: Border.all(color: color.withValues(alpha: 0.5)),
           boxShadow: [
             BoxShadow(
-              color: color.withOpacity(0.3),
+              color: color.withValues(alpha: 0.3),
               blurRadius: 20,
               spreadRadius: 2,
             ),
@@ -291,7 +291,7 @@ class _MoodTrackerState extends State<MoodTracker> {
       decoration: BoxDecoration(
         color: AppColors.backgroundCard,
         borderRadius: BorderRadius.circular(20),
-        border: Border.all(color: AppColors.electricPurple.withOpacity(0.3)),
+        border: Border.all(color: AppColors.electricPurple.withValues(alpha: 0.3)),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -312,7 +312,7 @@ class _MoodTrackerState extends State<MoodTracker> {
                 borderRadius: BorderRadius.circular(12),
                 boxShadow: [
                   BoxShadow(
-                    color: AppColors.neonPink.withOpacity(0.4),
+                    color: AppColors.neonPink.withValues(alpha: 0.4),
                     blurRadius: 15,
                   ),
                 ],
@@ -391,10 +391,10 @@ class SpiritualPracticeCard extends StatelessWidget {
         decoration: BoxDecoration(
           color: AppColors.backgroundCard,
           borderRadius: BorderRadius.circular(16),
-          border: Border.all(color: color.withOpacity(0.3)),
+          border: Border.all(color: color.withValues(alpha: 0.3)),
           boxShadow: [
             BoxShadow(
-              color: color.withOpacity(0.2),
+              color: color.withValues(alpha: 0.2),
               blurRadius: 10,
             ),
           ],
@@ -405,7 +405,7 @@ class SpiritualPracticeCard extends StatelessWidget {
             Container(
               padding: const EdgeInsets.all(12),
               decoration: BoxDecoration(
-                color: color.withOpacity(0.2),
+                color: color.withValues(alpha: 0.2),
                 borderRadius: BorderRadius.circular(12),
               ),
               child: Icon(icon, color: color, size: 28),

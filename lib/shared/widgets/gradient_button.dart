@@ -40,13 +40,13 @@ class _GradientButtonState extends State<GradientButton> with SingleTickerProvid
         duration: const Duration(milliseconds: 150),
         width: widget.width,
         height: widget.height,
-        transform: Matrix4.identity()..scale(_isPressed ? 0.98 : 1.0),
+        transform: Matrix4.diagonal3Values(_isPressed ? 0.98 : 1.0, _isPressed ? 0.98 : 1.0, 1.0),
         decoration: BoxDecoration(
           gradient: widget.gradient,
           borderRadius: BorderRadius.circular(12),
           boxShadow: [
             BoxShadow(
-              color: AppColors.neonPink.withOpacity(_isPressed ? 0.3 : 0.5),
+              color: AppColors.neonPink.withValues(alpha: _isPressed ? 0.3 : 0.5),
               blurRadius: _isPressed ? 10 : 20,
               spreadRadius: _isPressed ? 0 : 2,
             ),
@@ -120,12 +120,12 @@ class _NeonIconButtonState extends State<NeonIconButton> {
         duration: const Duration(milliseconds: 200),
         padding: const EdgeInsets.all(10),
         decoration: BoxDecoration(
-          color: _isHovered ? widget.color.withOpacity(0.2) : Colors.transparent,
+          color: _isHovered ? widget.color.withValues(alpha: 0.2) : Colors.transparent,
           borderRadius: BorderRadius.circular(10),
           boxShadow: _isHovered
               ? [
                   BoxShadow(
-                    color: widget.color.withOpacity(0.5),
+                    color: widget.color.withValues(alpha: 0.5),
                     blurRadius: 15,
                     spreadRadius: 1,
                   ),

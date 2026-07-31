@@ -64,7 +64,7 @@ class _NeonCardState extends State<NeonCard> with SingleTickerProviderStateMixin
               borderRadius: BorderRadius.circular(16),
               boxShadow: [
                 BoxShadow(
-                  color: glowColor.withOpacity(_isHovered ? 0.6 : 0.3),
+                  color: glowColor.withValues(alpha: _isHovered ? 0.6 : 0.3),
                   blurRadius: _isHovered ? widget.glowRadius * 1.5 : widget.glowRadius,
                   spreadRadius: _isHovered ? 3 : 1,
                 ),
@@ -118,7 +118,7 @@ class NeonStatCard extends StatelessWidget {
               Container(
                 padding: const EdgeInsets.all(8),
                 decoration: BoxDecoration(
-                  color: color.withOpacity(0.2),
+                  color: color.withValues(alpha: 0.2),
                   borderRadius: BorderRadius.circular(8),
                 ),
                 child: Icon(icon, color: color, size: 20),

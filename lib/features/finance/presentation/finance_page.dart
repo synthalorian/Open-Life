@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_animate/flutter_animate.dart';
-import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:fl_chart/fl_chart.dart';
 
 import '../../../core/theme/app_colors.dart';
@@ -52,7 +51,7 @@ class _FinancePageState extends ConsumerState<FinancePage> with SingleTickerProv
                     begin: Alignment.topCenter,
                     end: Alignment.bottomCenter,
                     colors: [
-                      AppColors.financePrimary.withOpacity(0.3),
+                      AppColors.financePrimary.withValues(alpha: 0.3),
                       AppColors.backgroundDarker,
                     ],
                   ),
@@ -89,10 +88,10 @@ class _FinancePageState extends ConsumerState<FinancePage> with SingleTickerProv
               labelColor: AppColors.financePrimary,
               unselectedLabelColor: AppColors.textMuted,
               tabs: [
-                Tab(icon: Icon(PhosphorIcons.chartPie())),
-                Tab(icon: Icon(PhosphorIcons.wallet())),
-                Tab(icon: Icon(PhosphorIcons.target())),
-                Tab(icon: Icon(PhosphorIcons.sparkle())),
+                Tab(icon: Icon(Icons.pie_chart)),
+                Tab(icon: Icon(Icons.account_balance_wallet)),
+                Tab(icon: Icon(Icons.track_changes)),
+                Tab(icon: Icon(Icons.auto_awesome)),
               ],
             ),
           ),
@@ -242,7 +241,7 @@ class _FinancePageState extends ConsumerState<FinancePage> with SingleTickerProv
           const SizedBox(height: 24),
           GradientButton(
             text: 'Add Budget',
-            icon: PhosphorIcons.plus(),
+            icon: Icons.add,
             gradient: AppColors.financeGradient,
           ),
         ],
@@ -264,7 +263,7 @@ class _FinancePageState extends ConsumerState<FinancePage> with SingleTickerProv
           const SizedBox(height: 24),
           GradientButton(
             text: 'Create Goal',
-            icon: PhosphorIcons.plus(),
+            icon: Icons.add,
             gradient: AppColors.financeGradient,
           ),
         ],
@@ -281,19 +280,19 @@ class _FinancePageState extends ConsumerState<FinancePage> with SingleTickerProv
           NeonCard(
             gradient: LinearGradient(
               colors: [
-                AppColors.financePrimary.withOpacity(0.2),
-                AppColors.sunsetOrange.withOpacity(0.2),
+                AppColors.financePrimary.withValues(alpha: 0.2),
+                AppColors.sunsetOrange.withValues(alpha: 0.2),
               ],
             ),
             child: Column(
               children: [
                 Container(
                   padding: const EdgeInsets.all(16),
-                  decoration: BoxDecoration(
+                  decoration: const BoxDecoration(
                     gradient: AppColors.financeGradient,
                     shape: BoxShape.circle,
                   ),
-                  child: Icon(PhosphorIcons.brain(), size: 32, color: Colors.white),
+                  child: Icon(Icons.psychology, size: 32, color: Colors.white),
                 ),
                 const SizedBox(height: 16),
                 Text('AI Financial Advisor', style: AppTextStyles.h3),
@@ -306,7 +305,7 @@ class _FinancePageState extends ConsumerState<FinancePage> with SingleTickerProv
                 const SizedBox(height: 24),
                 GradientButton(
                   text: 'Start Chat',
-                  icon: PhosphorIcons.chatCircle(),
+                  icon: Icons.chat_bubble_outline,
                   gradient: AppColors.financeGradient,
                 ),
               ],
@@ -332,7 +331,7 @@ class _FinancePageState extends ConsumerState<FinancePage> with SingleTickerProv
           Container(
             padding: const EdgeInsets.all(10),
             decoration: BoxDecoration(
-              color: tx.color.withOpacity(0.2),
+              color: tx.color.withValues(alpha: 0.2),
               borderRadius: BorderRadius.circular(10),
             ),
             child: Icon(tx.icon, color: tx.color, size: 20),
@@ -398,10 +397,10 @@ class _FinancePageState extends ConsumerState<FinancePage> with SingleTickerProv
                 child: Container(
                   height: 8,
                   decoration: BoxDecoration(
-                    gradient: LinearGradient(colors: [budget.color, budget.color.withOpacity(0.6)]),
+                    gradient: LinearGradient(colors: [budget.color, budget.color.withValues(alpha: 0.6)]),
                     borderRadius: BorderRadius.circular(4),
                     boxShadow: [
-                      BoxShadow(color: budget.color.withOpacity(0.5), blurRadius: 8),
+                      BoxShadow(color: budget.color.withValues(alpha: 0.5), blurRadius: 8),
                     ],
                   ),
                 ),
@@ -436,7 +435,7 @@ class _FinancePageState extends ConsumerState<FinancePage> with SingleTickerProv
                   gradient: AppColors.financeGradient,
                   borderRadius: BorderRadius.circular(10),
                 ),
-                child: Icon(PhosphorIcons.flag(), color: Colors.white, size: 20),
+                child: Icon(Icons.flag, color: Colors.white, size: 20),
               ),
               const SizedBox(width: 12),
               Expanded(
@@ -481,7 +480,7 @@ class _FinancePageState extends ConsumerState<FinancePage> with SingleTickerProv
                     gradient: AppColors.financeGradient,
                     borderRadius: BorderRadius.circular(4),
                     boxShadow: [
-                      BoxShadow(color: AppColors.financePrimary.withOpacity(0.5), blurRadius: 8),
+                      BoxShadow(color: AppColors.financePrimary.withValues(alpha: 0.5), blurRadius: 8),
                     ],
                   ),
                 ),
@@ -502,8 +501,8 @@ class _FinancePageState extends ConsumerState<FinancePage> with SingleTickerProv
     return NeonCard(
       gradient: LinearGradient(
         colors: [
-          AppColors.financePrimary.withOpacity(0.2),
-          AppColors.sunsetOrange.withOpacity(0.2),
+          AppColors.financePrimary.withValues(alpha: 0.2),
+          AppColors.sunsetOrange.withValues(alpha: 0.2),
         ],
       ),
       child: Row(
@@ -511,10 +510,10 @@ class _FinancePageState extends ConsumerState<FinancePage> with SingleTickerProv
           Container(
             padding: const EdgeInsets.all(12),
             decoration: BoxDecoration(
-              color: AppColors.financePrimary.withOpacity(0.2),
+              color: AppColors.financePrimary.withValues(alpha: 0.2),
               borderRadius: BorderRadius.circular(12),
             ),
-            child: Icon(PhosphorIcons.sparkle(), color: AppColors.financePrimary),
+            child: Icon(Icons.auto_awesome, color: AppColors.financePrimary),
           ),
           const SizedBox(width: 16),
           Expanded(
@@ -540,7 +539,7 @@ class _FinancePageState extends ConsumerState<FinancePage> with SingleTickerProv
         child: Row(
           children: [
             Expanded(child: Text(question, style: AppTextStyles.bodyMedium)),
-            Icon(PhosphorIcons.caretRight(), color: AppColors.textMuted, size: 20),
+            Icon(Icons.chevron_right, color: AppColors.textMuted, size: 20),
           ],
         ),
       ),

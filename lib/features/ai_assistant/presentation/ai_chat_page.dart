@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_animate/flutter_animate.dart';
-import 'package:phosphor_flutter/phosphor_flutter.dart';
 
 import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_text_styles.dart';
@@ -77,7 +76,7 @@ class _AIChatPageState extends ConsumerState<AIChatPage> {
         color: AppColors.backgroundDarker,
         boxShadow: [
           BoxShadow(
-            color: AppColors.electricPurple.withOpacity(0.3),
+            color: AppColors.electricPurple.withValues(alpha: 0.3),
             blurRadius: 10,
             offset: const Offset(0, 2),
           ),
@@ -92,12 +91,12 @@ class _AIChatPageState extends ConsumerState<AIChatPage> {
               borderRadius: BorderRadius.circular(12),
               boxShadow: [
                 BoxShadow(
-                  color: AppColors.neonPink.withOpacity(0.5),
+                  color: AppColors.neonPink.withValues(alpha: 0.5),
                   blurRadius: 15,
                 ),
               ],
             ),
-            child: Icon(PhosphorIcons.brain(), color: Colors.white, size: 24),
+            child: Icon(Icons.psychology, color: Colors.white, size: 24),
           ),
           const SizedBox(width: 16),
           Expanded(
@@ -124,9 +123,9 @@ class _AIChatPageState extends ConsumerState<AIChatPage> {
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
             decoration: BoxDecoration(
-              color: AppColors.success.withOpacity(0.2),
+              color: AppColors.success.withValues(alpha: 0.2),
               borderRadius: BorderRadius.circular(20),
-              border: Border.all(color: AppColors.success.withOpacity(0.5)),
+              border: Border.all(color: AppColors.success.withValues(alpha: 0.5)),
             ),
             child: Row(
               mainAxisSize: MainAxisSize.min,
@@ -166,13 +165,13 @@ class _AIChatPageState extends ConsumerState<AIChatPage> {
                 shape: BoxShape.circle,
                 boxShadow: [
                   BoxShadow(
-                    color: AppColors.neonPink.withOpacity(0.5),
+                    color: AppColors.neonPink.withValues(alpha: 0.5),
                     blurRadius: 30,
                     spreadRadius: 5,
                   ),
                 ],
               ),
-              child: Icon(PhosphorIcons.sparkle(), size: 48, color: Colors.white),
+              child: Icon(Icons.auto_awesome, size: 48, color: Colors.white),
             ).animate().fadeIn().scale(duration: 600.ms),
             const SizedBox(height: 24),
             ShaderMask(
@@ -197,9 +196,9 @@ class _AIChatPageState extends ConsumerState<AIChatPage> {
               runSpacing: 12,
               alignment: WrapAlignment.center,
               children: [
-                _buildContextBadge('Fitness', PhosphorIcons.barbell(), AppColors.fitnessPrimary),
-                _buildContextBadge('Finance', PhosphorIcons.wallet(), AppColors.financePrimary),
-                _buildContextBadge('Health', PhosphorIcons.heart(), AppColors.assurancePrimary),
+                _buildContextBadge('Fitness', Icons.fitness_center, AppColors.fitnessPrimary),
+                _buildContextBadge('Finance', Icons.account_balance_wallet, AppColors.financePrimary),
+                _buildContextBadge('Health', Icons.favorite, AppColors.assurancePrimary),
               ],
             ).animate().fadeIn(delay: 400.ms),
           ],
@@ -212,9 +211,9 @@ class _AIChatPageState extends ConsumerState<AIChatPage> {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
       decoration: BoxDecoration(
-        color: color.withOpacity(0.15),
+        color: color.withValues(alpha: 0.15),
         borderRadius: BorderRadius.circular(20),
-        border: Border.all(color: color.withOpacity(0.3)),
+        border: Border.all(color: color.withValues(alpha: 0.3)),
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
@@ -236,22 +235,22 @@ class _AIChatPageState extends ConsumerState<AIChatPage> {
         children: [
           _buildSuggestionCard(
             'How\'s my overall health?',
-            PhosphorIcons.heartbeat(),
+            Icons.favorite_border,
             AppColors.assurancePrimary,
           ),
           _buildSuggestionCard(
             'Analyze my spending',
-            PhosphorIcons.chartPie(),
+            Icons.pie_chart,
             AppColors.financePrimary,
           ),
           _buildSuggestionCard(
             'Create a workout plan',
-            PhosphorIcons.barbell(),
+            Icons.fitness_center,
             AppColors.fitnessPrimary,
           ),
           _buildSuggestionCard(
             'Weekly summary',
-            PhosphorIcons.calendar(),
+            Icons.calendar_today,
             AppColors.electricPurple,
           ),
         ],
@@ -309,7 +308,7 @@ class _AIChatPageState extends ConsumerState<AIChatPage> {
                 gradient: AppColors.neonGlowGradient,
                 borderRadius: BorderRadius.circular(10),
               ),
-              child: Icon(PhosphorIcons.brain(), color: Colors.white, size: 18),
+              child: Icon(Icons.psychology, color: Colors.white, size: 18),
             ),
             const SizedBox(width: 12),
           ],
@@ -319,7 +318,7 @@ class _AIChatPageState extends ConsumerState<AIChatPage> {
               decoration: BoxDecoration(
                 gradient: isUser
                     ? AppColors.sunsetGradient
-                    : LinearGradient(
+                    : const LinearGradient(
                         colors: [
                           AppColors.backgroundCard,
                           AppColors.backgroundCardLight,
@@ -334,14 +333,14 @@ class _AIChatPageState extends ConsumerState<AIChatPage> {
                 boxShadow: isUser
                     ? [
                         BoxShadow(
-                          color: AppColors.neonPink.withOpacity(0.3),
+                          color: AppColors.neonPink.withValues(alpha: 0.3),
                           blurRadius: 10,
                         ),
                       ]
                     : null,
                 border: isUser
                     ? null
-                    : Border.all(color: AppColors.electricPurple.withOpacity(0.3)),
+                    : Border.all(color: AppColors.electricPurple.withValues(alpha: 0.3)),
               ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -360,7 +359,7 @@ class _AIChatPageState extends ConsumerState<AIChatPage> {
                         return Container(
                           padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                           decoration: BoxDecoration(
-                            color: ctx.color.withOpacity(0.2),
+                            color: ctx.color.withValues(alpha: 0.2),
                             borderRadius: BorderRadius.circular(12),
                           ),
                           child: Row(
@@ -390,7 +389,7 @@ class _AIChatPageState extends ConsumerState<AIChatPage> {
                 color: AppColors.backgroundCardLight,
                 borderRadius: BorderRadius.circular(10),
               ),
-              child: Icon(PhosphorIcons.user(), color: AppColors.textMuted, size: 18),
+              child: Icon(Icons.person, color: AppColors.textMuted, size: 18),
             ),
           ],
         ],
@@ -409,7 +408,7 @@ class _AIChatPageState extends ConsumerState<AIChatPage> {
               gradient: AppColors.neonGlowGradient,
               borderRadius: BorderRadius.circular(10),
             ),
-            child: Icon(PhosphorIcons.brain(), color: Colors.white, size: 18),
+            child: Icon(Icons.psychology, color: Colors.white, size: 18),
           ),
           const SizedBox(width: 12),
           Container(
@@ -422,7 +421,7 @@ class _AIChatPageState extends ConsumerState<AIChatPage> {
                 bottomRight: Radius.circular(16),
                 bottomLeft: Radius.circular(4),
               ),
-              border: Border.all(color: AppColors.electricPurple.withOpacity(0.3)),
+              border: Border.all(color: AppColors.electricPurple.withValues(alpha: 0.3)),
             ),
             child: Row(
               mainAxisSize: MainAxisSize.min,
@@ -431,7 +430,7 @@ class _AIChatPageState extends ConsumerState<AIChatPage> {
                   margin: const EdgeInsets.symmetric(horizontal: 3),
                   width: 8,
                   height: 8,
-                  decoration: BoxDecoration(
+                  decoration: const BoxDecoration(
                     gradient: AppColors.neonGlowGradient,
                     shape: BoxShape.circle,
                   ),
@@ -453,7 +452,7 @@ class _AIChatPageState extends ConsumerState<AIChatPage> {
         color: AppColors.backgroundDarker,
         boxShadow: [
           BoxShadow(
-            color: AppColors.electricPurple.withOpacity(0.3),
+            color: AppColors.electricPurple.withValues(alpha: 0.3),
             blurRadius: 10,
             offset: const Offset(0, -2),
           ),
@@ -478,7 +477,7 @@ class _AIChatPageState extends ConsumerState<AIChatPage> {
                   border: InputBorder.none,
                   contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 14),
                   suffixIcon: IconButton(
-                    icon: Icon(PhosphorIcons.microphone(), color: AppColors.textMuted),
+                    icon: Icon(Icons.mic, color: AppColors.textMuted),
                     onPressed: () {
                       // Voice input
                     },
@@ -495,14 +494,14 @@ class _AIChatPageState extends ConsumerState<AIChatPage> {
               shape: BoxShape.circle,
               boxShadow: [
                 BoxShadow(
-                  color: AppColors.neonPink.withOpacity(0.5),
+                  color: AppColors.neonPink.withValues(alpha: 0.5),
                   blurRadius: 15,
                 ),
               ],
             ),
             child: IconButton(
               icon: Icon(
-                chatState.isTyping ? PhosphorIcons.hourglass() : PhosphorIcons.paperPlaneTilt(),
+                chatState.isTyping ? Icons.hourglass_empty : Icons.send,
                 color: Colors.white,
               ),
               onPressed: chatState.isTyping

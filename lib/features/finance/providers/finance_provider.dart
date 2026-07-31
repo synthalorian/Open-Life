@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:phosphor_flutter/phosphor_flutter.dart';
 import '../data/finance_repository.dart';
 import '../../../shared/models/finance_data.dart';
 import '../../../core/theme/app_colors.dart';
@@ -168,14 +167,14 @@ class FinanceNotifier extends StateNotifier<FinanceState> {
 extension TransactionUI on Transaction {
   IconData get icon {
     return switch (category.toLowerCase()) {
-      'food' || 'dining' || 'groceries' => PhosphorIcons.forkKnife(),
-      'transport' || 'gas' || 'car' => PhosphorIcons.car(),
-      'entertainment' || 'movies' || 'games' => PhosphorIcons.gameController(),
-      'shopping' || 'clothes' => PhosphorIcons.shoppingBag(),
-      'housing' || 'rent' || 'mortgage' => PhosphorIcons.house(),
-      'health' || 'medical' => PhosphorIcons.heart(),
-      'income' || 'salary' => PhosphorIcons.money(),
-      _ => isExpense ? PhosphorIcons.minus() : PhosphorIcons.plus(),
+      'food' || 'dining' || 'groceries' => Icons.restaurant,
+      'transport' || 'gas' || 'car' => Icons.directions_car,
+      'entertainment' || 'movies' || 'games' => Icons.sports_esports,
+      'shopping' || 'clothes' => Icons.shopping_bag,
+      'housing' || 'rent' || 'mortgage' => Icons.home,
+      'health' || 'medical' => Icons.favorite,
+      'income' || 'salary' => Icons.attach_money,
+      _ => isExpense ? Icons.remove : Icons.add,
     };
   }
 
@@ -195,14 +194,14 @@ extension TransactionUI on Transaction {
 extension BudgetUI on Budget {
   IconData get icon {
     return switch (category.toLowerCase()) {
-      'food' || 'dining' || 'groceries' => PhosphorIcons.forkKnife(),
-      'transport' || 'gas' => PhosphorIcons.car(),
-      'entertainment' => PhosphorIcons.gameController(),
-      'shopping' => PhosphorIcons.shoppingBag(),
-      'housing' || 'rent' => PhosphorIcons.house(),
-      'health' || 'medical' => PhosphorIcons.heart(),
-      'utilities' => PhosphorIcons.lightning(),
-      _ => PhosphorIcons.wallet(),
+      'food' || 'dining' || 'groceries' => Icons.restaurant,
+      'transport' || 'gas' => Icons.directions_car,
+      'entertainment' => Icons.sports_esports,
+      'shopping' => Icons.shopping_bag,
+      'housing' || 'rent' => Icons.home,
+      'health' || 'medical' => Icons.favorite,
+      'utilities' => Icons.bolt,
+      _ => Icons.account_balance_wallet,
     };
   }
 

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:phosphor_flutter/phosphor_flutter.dart';
 
 import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_text_styles.dart';
@@ -79,11 +78,11 @@ class SettingsPage extends ConsumerWidget {
                   // Buy Me a Coffee Button
                   _buildSupportCard(
                     context: context,
-                    icon: PhosphorIcons.coffee(),
+                    icon: Icons.coffee,
                     iconColor: AppColors.sunsetOrange,
                     title: 'Buy Me a Coffee',
                     subtitle: 'Support development with a donation',
-                    gradient: LinearGradient(
+                    gradient: const LinearGradient(
                       colors: [AppColors.sunsetOrange, AppColors.neonPink],
                     ),
                     onTap: () => _launchUrl(context, buyMeCoffeeUrl),
@@ -94,11 +93,11 @@ class SettingsPage extends ConsumerWidget {
                   // Open Source Button
                   _buildSupportCard(
                     context: context,
-                    icon: PhosphorIcons.githubLogo(),
+                    icon: Icons.code,
                     iconColor: AppColors.textPrimary,
                     title: 'Open Source',
                     subtitle: 'View source code on GitHub',
-                    gradient: LinearGradient(
+                    gradient: const LinearGradient(
                       colors: [AppColors.electricPurple, AppColors.neonPink],
                     ),
                     onTap: () => _launchUrl(context, githubUrl),
@@ -126,19 +125,19 @@ class SettingsPage extends ConsumerWidget {
                     child: Column(
                       children: [
                         _buildAboutRow(
-                          icon: PhosphorIcons.info(),
+                          icon: Icons.info,
                           label: 'Version',
                           value: '1.0.0',
                         ),
                         const Divider(color: AppColors.electricPurpleDark, height: 32),
                         _buildAboutRow(
-                          icon: PhosphorIcons.code(),
+                          icon: Icons.code,
                           label: 'Built with',
                           value: 'Flutter & ❤️',
                         ),
                         const Divider(color: AppColors.electricPurpleDark, height: 32),
                         _buildAboutRow(
-                          icon: PhosphorIcons.paintBrush(),
+                          icon: Icons.brush,
                           label: 'Theme',
                           value: 'Synthwave',
                         ),
@@ -157,8 +156,8 @@ class SettingsPage extends ConsumerWidget {
               child: NeonCard(
                 gradient: LinearGradient(
                   colors: [
-                    AppColors.neonPink.withOpacity(0.2),
-                    AppColors.electricPurple.withOpacity(0.2),
+                    AppColors.neonPink.withValues(alpha: 0.2),
+                    AppColors.electricPurple.withValues(alpha: 0.2),
                   ],
                 ),
                 glowColor: AppColors.neonPink,
@@ -171,7 +170,7 @@ class SettingsPage extends ConsumerWidget {
                         borderRadius: BorderRadius.circular(16),
                       ),
                       child: const Icon(
-                        PhosphorIconsFill.heart,
+                        Icons.favorite,
                         color: Colors.white,
                         size: 32,
                       ),
@@ -235,7 +234,7 @@ class SettingsPage extends ConsumerWidget {
               borderRadius: BorderRadius.circular(14),
               boxShadow: [
                 BoxShadow(
-                  color: iconColor.withOpacity(0.4),
+                  color: iconColor.withValues(alpha: 0.4),
                   blurRadius: 12,
                 ),
               ],
@@ -268,7 +267,7 @@ class SettingsPage extends ConsumerWidget {
               borderRadius: BorderRadius.circular(10),
             ),
             child: Icon(
-              PhosphorIcons.arrowSquareOut(),
+              Icons.open_in_new,
               color: iconColor,
               size: 20,
             ),
@@ -308,9 +307,9 @@ class SettingsPage extends ConsumerWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
       decoration: BoxDecoration(
-        color: color.withOpacity(0.2),
+        color: color.withValues(alpha: 0.2),
         borderRadius: BorderRadius.circular(20),
-        border: Border.all(color: color.withOpacity(0.5)),
+        border: Border.all(color: color.withValues(alpha: 0.5)),
       ),
       child: Text(
         label,

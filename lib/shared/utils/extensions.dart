@@ -57,7 +57,7 @@ class GradientHelper {
       borderRadius: BorderRadius.circular(radius),
       boxShadow: [
         BoxShadow(
-          color: color.withOpacity(0.5),
+          color: color.withValues(alpha: 0.5),
           blurRadius: glowRadius,
           spreadRadius: 2,
         ),
@@ -71,8 +71,8 @@ class GradientHelper {
     return BoxDecoration(
       gradient: AppColors.chromeGradient,
       borderRadius: BorderRadius.circular(radius),
-      boxShadow: [
-        const BoxShadow(
+      boxShadow: const [
+        BoxShadow(
           color: AppColors.chrome,
           blurRadius: 10,
           spreadRadius: 1,

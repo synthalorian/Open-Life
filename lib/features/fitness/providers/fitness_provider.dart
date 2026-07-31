@@ -127,14 +127,14 @@ class FitnessNotifier extends StateNotifier<FitnessState> {
     final percentage = (steps / goal * 100).round();
     
     if (percentage >= 100) {
-      return '🎉 Goal crushed! You\'ve hit ${percentage}% of your step goal. Great work!';
+      return '🎉 Goal crushed! You\'ve hit $percentage% of your step goal. Great work!';
     } else if (percentage >= 80) {
       final remaining = goal - steps;
       return 'Almost there! Just $remaining more steps to hit your goal. A 10-minute walk will do it!';
     } else if (percentage >= 50) {
-      return 'You\'re at ${percentage}% of your goal. Keep moving!';
+      return 'You\'re at $percentage% of your goal. Keep moving!';
     } else {
-      return 'Let\'s get moving! You\'re at ${percentage}% of your daily step goal.';
+      return 'Let\'s get moving! You\'re at $percentage% of your daily step goal.';
     }
   }
 

@@ -102,7 +102,7 @@ class _PulseGlowState extends State<PulseGlow> with SingleTickerProviderStateMix
           decoration: BoxDecoration(
             boxShadow: [
               BoxShadow(
-                color: widget.glowColor.withOpacity(0.5),
+                color: widget.glowColor.withValues(alpha: 0.5),
                 blurRadius: _animation.value,
                 spreadRadius: _animation.value / 4,
               ),
@@ -295,7 +295,7 @@ class TypingIndicator extends StatelessWidget {
           margin: const EdgeInsets.symmetric(horizontal: 2),
           width: 8,
           height: 8,
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
             color: AppColors.neonPink,
             shape: BoxShape.circle,
           ),

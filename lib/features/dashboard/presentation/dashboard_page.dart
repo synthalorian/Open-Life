@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:go_router/go_router.dart';
-import 'package:phosphor_flutter/phosphor_flutter.dart';
 
 import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_text_styles.dart';
@@ -71,7 +70,7 @@ class DashboardPage extends ConsumerWidget {
                           title: 'Steps Today',
                           value: dashboardState.stepsToday.toString(),
                           subtitle: 'Goal: 10,000',
-                          icon: PhosphorIcons.footprints(),
+                          icon: Icons.directions_walk,
                           color: AppColors.fitnessPrimary,
                           onTap: () => context.go('/fitness'),
                         ),
@@ -82,7 +81,7 @@ class DashboardPage extends ConsumerWidget {
                           title: 'Budget Left',
                           value: '\$${dashboardState.budgetRemaining}',
                           subtitle: 'This month',
-                          icon: PhosphorIcons.wallet(),
+                          icon: Icons.account_balance_wallet,
                           color: AppColors.financePrimary,
                           onTap: () => context.go('/finance'),
                         ),
@@ -97,7 +96,7 @@ class DashboardPage extends ConsumerWidget {
                           title: 'Calories',
                           value: dashboardState.caloriesToday.toString(),
                           subtitle: 'Remaining: ${dashboardState.caloriesRemaining}',
-                          icon: PhosphorIcons.fire(),
+                          icon: Icons.local_fire_department,
                           color: AppColors.sunsetOrange,
                         ),
                       ),
@@ -107,7 +106,7 @@ class DashboardPage extends ConsumerWidget {
                           title: 'Next Appt',
                           value: dashboardState.nextAppointment ?? 'None',
                           subtitle: 'Health checkup',
-                          icon: PhosphorIcons.calendarCheck(),
+                          icon: Icons.event_available,
                           color: AppColors.assurancePrimary,
                           onTap: () => context.go('/assurance'),
                         ),
@@ -135,7 +134,7 @@ class DashboardPage extends ConsumerWidget {
                           borderRadius: BorderRadius.circular(8),
                         ),
                         child: Icon(
-                          PhosphorIcons.sparkle(),
+                          Icons.auto_awesome,
                           color: Colors.white,
                           size: 18,
                         ),
@@ -180,8 +179,8 @@ class DashboardPage extends ConsumerWidget {
     return NeonCard(
       gradient: LinearGradient(
         colors: [
-          AppColors.electricPurple.withOpacity(0.3),
-          AppColors.neonPink.withOpacity(0.3),
+          AppColors.electricPurple.withValues(alpha: 0.3),
+          AppColors.neonPink.withValues(alpha: 0.3),
         ],
       ),
       glowColor: AppColors.electricPurple,
@@ -195,13 +194,13 @@ class DashboardPage extends ConsumerWidget {
               borderRadius: BorderRadius.circular(12),
               boxShadow: [
                 BoxShadow(
-                  color: AppColors.neonPink.withOpacity(0.3),
+                  color: AppColors.neonPink.withValues(alpha: 0.3),
                   blurRadius: 15,
                 ),
               ],
             ),
             child: Icon(
-              PhosphorIcons.brain(),
+              Icons.psychology,
               color: Colors.white,
               size: 24,
             ),
@@ -224,7 +223,7 @@ class DashboardPage extends ConsumerWidget {
             ),
           ),
           Icon(
-            PhosphorIcons.caretRight(),
+            Icons.chevron_right,
             color: AppColors.textMuted,
           ),
         ],
@@ -243,7 +242,7 @@ class DashboardPage extends ConsumerWidget {
             Container(
               padding: const EdgeInsets.all(10),
               decoration: BoxDecoration(
-                color: rec.color.withOpacity(0.2),
+                color: rec.color.withValues(alpha: 0.2),
                 borderRadius: BorderRadius.circular(10),
               ),
               child: Icon(rec.icon, color: rec.color, size: 22),
@@ -270,9 +269,9 @@ class DashboardPage extends ConsumerWidget {
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
               decoration: BoxDecoration(
-                color: rec.color.withOpacity(0.2),
+                color: rec.color.withValues(alpha: 0.2),
                 borderRadius: BorderRadius.circular(20),
-                border: Border.all(color: rec.color.withOpacity(0.5)),
+                border: Border.all(color: rec.color.withValues(alpha: 0.5)),
               ),
               child: Text(
                 rec.category,
@@ -328,11 +327,11 @@ class DashboardPage extends ConsumerWidget {
               child: Container(
                 height: 8,
                 decoration: BoxDecoration(
-                  gradient: LinearGradient(colors: [color, color.withOpacity(0.6)]),
+                  gradient: LinearGradient(colors: [color, color.withValues(alpha: 0.6)]),
                   borderRadius: BorderRadius.circular(4),
                   boxShadow: [
                     BoxShadow(
-                      color: color.withOpacity(0.5),
+                      color: color.withValues(alpha: 0.5),
                       blurRadius: 8,
                     ),
                   ],
