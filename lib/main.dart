@@ -5,7 +5,7 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:intl/intl.dart';
 import 'core/theme/app_colors.dart';
 import 'core/theme/app_text_styles.dart';
-import 'core/theme/synthwave_theme.dart';
+import 'core/theme/app_themes.dart';
 
 // ==================== COMPREHENSIVE STATE PROVIDERS ====================
 
@@ -102,10 +102,13 @@ void main() {
   runApp(const ProviderScope(child: OpenLifeApp()));
 }
 
-class OpenLifeApp extends StatelessWidget {
+class OpenLifeApp extends ConsumerWidget {
   const OpenLifeApp({super.key});
   @override
-  Widget build(BuildContext context) => MaterialApp(title: 'Open Life', debugShowCheckedModeBanner: false, theme: SynthwaveTheme.dark, home: const MainScreen());
+  Widget build(BuildContext context, WidgetRef ref) {
+    final theme = ref.watch(themeProvider);
+    return MaterialApp(title: 'Open Life', debugShowCheckedModeBanner: false, theme: theme.themeData, home: const MainScreen());
+  }
 }
 
 class MainScreen extends StatefulWidget {
@@ -213,6 +216,35 @@ class _AIChatSheetState extends ConsumerState<AIChatSheet> {
   }
 }
 
+// ==================== THEME PICKER ====================
+
+void _showThemePicker(BuildContext context, WidgetRef ref) {
+  final current = ref.read(themeProvider);
+  showDialog(
+    context: context,
+    builder: (dialogContext) => SimpleDialog(
+      title: const Text('SELECT THEME'),
+      children: [
+        for (final theme in AppThemeName.values)
+          SimpleDialogOption(
+            onPressed: () {
+              ref.read(themeProvider.notifier).setTheme(theme);
+              Navigator.pop(dialogContext);
+            },
+            child: Row(children: [
+              Icon(
+                theme == current ? Icons.radio_button_checked : Icons.radio_button_off,
+                color: theme == current ? Theme.of(dialogContext).colorScheme.primary : AppColors.textMuted,
+              ),
+              const SizedBox(width: 12),
+              Text(theme.label, style: AppTextStyles.bodyMedium),
+            ]),
+          ),
+      ],
+    ),
+  );
+}
+
 // ==================== DASHBOARD ====================
 
 class DashboardScreen extends ConsumerWidget {
@@ -232,7 +264,7 @@ class DashboardScreen extends ConsumerWidget {
       child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
         Row(children: [
           Expanded(child: ShaderMask(shaderCallback: (b) => AppColors.sunsetGradient.createShader(b), child: Text('Open Life', style: AppTextStyles.h1.copyWith(color: Colors.white)))),
-          IconButton(onPressed: () {}, icon: Icon(Icons.settings, color: AppColors.textMuted)),
+          IconButton(onPressed: () => _showThemePicker(context, ref), icon: Icon(Icons.settings, color: AppColors.textMuted)),
         ]),
         Text(DateFormat('EEEE, MMMM d').format(DateTime.now()), style: AppTextStyles.bodyMedium),
         const SizedBox(height: 24),
